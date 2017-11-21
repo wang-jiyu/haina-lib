@@ -1,0 +1,24 @@
+{
+  "name": "@com.haina.web/haina-lib",
+  "version": "1.0.0",
+  "description": "haina-lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@60.205.162.223:com.haina.web/haina-lib.git"
+  },
+  "keywords": [
+    "haina-lib"
+  ],
+  "author": "sunlandong",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.17.1"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.53"
+  }
+}
