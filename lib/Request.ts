@@ -51,4 +51,6 @@ class Request {
 
 }
 
-export const  advisor = new Request('advisor')
+export default {
+    advisor:new Request('advisor')
+}
