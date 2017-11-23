@@ -52,5 +52,6 @@ class Request {
 }
 
 export default {
-    advisor:new Request('advisor')
+    advisor:new Request('advisor'),
+    mapi:new Request('mapi')
 }
