@@ -24,8 +24,9 @@ export default class LoginModel {
 
     public access_token:string
 
-}
+    public refresh_token:string
 
+}
 
 export function getLoginInstance() {
     return new LoginModel()

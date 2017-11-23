@@ -16,35 +16,50 @@ class Request {
         })
     }
     get(url: string, config?: AxiosRequestConfig): Promise<any> {
-        return this.axiosInstance.get(url, config).then(res => {
-            console.log(res)
-            if (res.data.code === 200) {
-                return res.data.data;
-            }
+        return new Promise((resolve, reject)=>{
+            this.axiosInstance.get(url, config).then(res => {
+                if (res.data.code === 200) {
+                    resolve(res.data.data)
+                }else {
+                    reject(res.data)
+                }
+            })
         })
     }
 
-    post(url: string, data?: any, config?: AxiosRequestConfig) {
-        return this.axiosInstance.post(url, data, config).then(res => {
-            if (res.data.code === 200) {
-                return res.data.data;
-            }
+    post(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+        return new Promise((resolve, reject)=>{
+            this.axiosInstance.post(url, data, config).then(res => {
+                if (res.data.code === 200) {
+                    resolve(res.data.data)
+                }else {
+                    reject(res.data)
+                }
+            })
         })
     }
 
-    put(url: string, data?: any, config?: AxiosRequestConfig) {
-        return this.axiosInstance.put(url, data, config).then(res => {
-            if (res.data.code === 200) {
-                return res.data.data;
-            }
+    put(url: string, data?: any, config?: AxiosRequestConfig): Promise<any> {
+        return new Promise((resolve, reject)=>{
+            this.axiosInstance.put(url, data, config).then(res => {
+                if (res.data.code === 200) {
+                    resolve(res.data.data)
+                }else {
+                    reject(res.data)
+                }
+            })
         })
     }
 
-    delete(url: string, config?: AxiosRequestConfig) {
-        return this.axiosInstance.delete(url, config).then(res => {
-            if (res.data.code === 200) {
-                return res.data.data;
-            }
+    delete(url: string, config?: AxiosRequestConfig): Promise<any> {
+        return new Promise((resolve, reject)=>{
+            this.axiosInstance.delete(url, config).then(res => {
+                if (res.data.code === 200) {
+                    resolve(res.data.data)
+                }else {
+                    reject(res.data)
+                }
+            })
         })
     }
 

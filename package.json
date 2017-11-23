@@ -16,7 +16,10 @@
   "author": "sunlandong",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.17.1"
+    "axios": "^0.17.1",
+    "blueimp-md5": "^2.10.0",
+    "install": "^0.10.2",
+    "npm": "^5.5.1"
   },
   "devDependencies": {
     "@types/node": "^8.0.53",
