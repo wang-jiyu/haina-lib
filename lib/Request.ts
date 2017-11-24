@@ -18,11 +18,14 @@ class Request {
     get(url: string, config?: AxiosRequestConfig): Promise<any> {
         return new Promise((resolve, reject)=>{
             this.axiosInstance.get(url, config).then(res => {
+                
                 if (res.data.code === 200) {
                     resolve(res.data.data)
                 }else {
                     reject(res.data)
                 }
+            }).catch(err=>{
+                reject(err)
             })
         })
     }
@@ -35,6 +38,8 @@ class Request {
                 }else {
                     reject(res.data)
                 }
+            }).catch(err=>{
+                reject(err)
             })
         })
     }
@@ -47,6 +52,8 @@ class Request {
                 }else {
                     reject(res.data)
                 }
+            }).catch(err=>{
+                reject(err)
             })
         })
     }
@@ -59,6 +66,8 @@ class Request {
                 }else {
                     reject(res.data)
                 }
+            }).catch(err=>{
+                reject(err)
             })
         })
     }
