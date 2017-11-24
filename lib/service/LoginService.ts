@@ -5,10 +5,18 @@ import Request from '../Request'
 import { version } from '../const'
 import { LoginModel } from '../model'
 import md5 from 'blueimp-md5/js/md5.min.js'
+import {UUID} from  '../Utils'
 
 
 export const login = (url: string, params: { user_id: string, passwd: string }):Promise<any> => {
     
+    let client_id = localStorage.getItem("client_id")
+    if(client_id){
+        LoginModel.client_id
+    }else {
+        LoginModel.client_id = UUID()
+        localStorage.setItem("client_id",client_id)
+    }
     return Request.mapi.get(`/v2/security/authorize?response_type=base&client_id=${LoginModel.client_id}`).then(data => {
         const { auth_code } = data
         return auth_code
