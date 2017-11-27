@@ -2,9 +2,8 @@
 
 
 import Request from '../Request'
-import { version } from '../const'
-import { LoginModel } from '../model'
-import md5 from 'blueimp-md5/js/md5.min.js'
+import { version } from '../const/index'
+import { LoginModel } from '../model/index'
 import { UUID } from '../Utils'
 
 

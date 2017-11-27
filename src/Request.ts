@@ -1,9 +1,9 @@
 import axios, { AxiosRequestConfig, AxiosInstance } from 'axios'
 
-import {BaseUrl} from './const'
+import {BaseUrl} from './const/index'
 
 
-class Request {
+export class Request {
 
     private axiosInstance: AxiosInstance
 

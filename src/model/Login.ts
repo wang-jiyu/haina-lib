@@ -1,7 +1,7 @@
 
 import {observable} from 'mobx'
 
-export default class LoginModel {
+export default class LoginClass {
 
 
     @observable
@@ -27,7 +27,3 @@ export default class LoginModel {
     public refresh_token:string
 
 }
-
-export function getLoginInstance() {
-    return new LoginModel()
-} 
