@@ -68,6 +68,7 @@ define(["require", "exports", "axios", "./const/index"], function (require, expo
     exports.Request = Request;
     exports.default = {
         advisor: new Request('advisor'),
-        mapi: new Request('mapi')
+        mapi: new Request('mapi'),
+        bigfund: new Request('bigfund')
     };
 });

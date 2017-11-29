@@ -11,5 +11,6 @@ export declare class Request {
 declare const _default: {
     advisor: Request;
     mapi: Request;
+    bigfund: Request;
 };
 export default _default;

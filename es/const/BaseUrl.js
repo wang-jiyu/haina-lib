@@ -11,6 +11,11 @@ define(["require", "exports"], function (require, exports) {
             production: 'https://mapi.0606.com.cn/api',
             testing: 'https://mapi-test.0606.com.cn/api',
             development: 'https://mapi-test.0606.com.cn/api'
+        },
+        bigfund: {
+            production: 'http://bigfund.0606.com.cn',
+            testing: 'http://bigfund-test.0606.com.cn',
+            development: 'http://bigfund-dev1.0606.com.cn'
         }
     };
 });
