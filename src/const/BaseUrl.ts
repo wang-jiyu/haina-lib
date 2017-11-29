@@ -14,5 +14,10 @@ export default   {
         production:'http://bigfund.0606.com.cn',
         testing:'http://bigfund-test.0606.com.cn',
         development:'http://bigfund-dev1.0606.com.cn'
+    },
+    quant:{
+        production: 'https://quant.0606.com.cn',
+        testing: 'https://quant-test.0606.com.cn',
+        development: 'https://quant-test.0606.com.cn'
     }
 } 

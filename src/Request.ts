@@ -78,5 +78,6 @@ export class Request {
 export default {
     advisor:new Request('advisor'),
     mapi:new Request('mapi'),
-    bigfund:new Request('bigfund')
+    bigfund:new Request('bigfund'),
+    quant:new Request('quant')
 }

@@ -12,5 +12,6 @@ declare const _default: {
     advisor: Request;
     mapi: Request;
     bigfund: Request;
+    quant: Request;
 };
 export default _default;

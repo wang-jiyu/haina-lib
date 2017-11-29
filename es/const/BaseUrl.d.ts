@@ -14,5 +14,10 @@ declare const _default: {
         testing: string;
         development: string;
     };
+    quant: {
+        production: string;
+        testing: string;
+        development: string;
+    };
 };
 export default _default;
