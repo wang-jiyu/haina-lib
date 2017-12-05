@@ -1,12 +1,12 @@
 
 
 export interface IFormatMoneyConfig {
-    places: number,
-    thousand: string,
-    decimal: string,
-    symbol: string,
-    unit:number,
-    autoUnit:boolean
+    places?: number,
+    thousand?: string,
+    decimal?: string,
+    symbol?: string,
+    unit?:number,
+    autoUnit?:boolean
 }
 export default class NumberUtil {
     /**
