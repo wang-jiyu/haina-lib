@@ -19,16 +19,17 @@ export default class NumberUtil {
      * @param unit 单位，根据number和期望结果决定
      * @param autoUnit 小数位的分隔符
      */
-    static formatMoney(number: number = 0, config: IFormatMoneyConfig = {
-        places: 2,
-        thousand: ',',
-        decimal: '.',
-        symbol: '',
-        unit:1,
-        autoUnit:false
-    }) {
-        let { places, thousand, decimal, symbol,unit,autoUnit } = config
-
+    static formatMoney(number: number = 0, config?: IFormatMoneyConfig) {
+        const param = Object.assign({}, {
+            places: 2,
+            thousand: ',',
+            decimal: '.',
+            symbol: '',
+            unit: 1,
+            autoUnit: false
+        }, { ...config })
+        let { places, thousand, decimal, symbol, unit, autoUnit } = param
+        let unitStr = ''
         let negative = number < 0 ? "-" : ""
         number = number / unit
         if(autoUnit){
@@ -42,8 +43,8 @@ export default class NumberUtil {
         let i = parseInt(Math.abs(number || 0).toFixed(places), 10)
         let is = i + ""
         var j = (j = is.length) > 3 ? j % 3 : 0;
-        var result = symbol + negative + (j ? is.substr(0, j) + thousand : "") + is.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + Math.abs(number - i).toFixed(places).slice(2) : "")
-        return `${result}${unit}`
+        var result = symbol + negative + (j ? is.substr(0, j) + thousand : "") + is.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + (Math.abs(number)-i).toFixed(places).slice(2) : "")
+        return autoUnit?{result,unit:unitStr}:result;
     }
 
 }

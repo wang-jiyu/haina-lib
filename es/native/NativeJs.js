@@ -40,6 +40,15 @@ define(["require", "exports"], function (require, exports) {
         static gorouter(router) {
             return exports.baseNativeJs('gorouter', { router });
         }
+        static shareWeiXin(shareValue) {
+            exports.baseNativeJs('shareWeiXin', shareValue);
+        }
+        static shareFriends(shareValue) {
+            exports.baseNativeJs('shareFriends', shareValue);
+        }
+        static share(shareValue) {
+            exports.baseNativeJs('shareFriends', shareValue);
+        }
     }
     exports.default = NativeJs;
 });

@@ -7,5 +7,8 @@ export interface IFormatMoneyConfig {
     autoUnit?: boolean;
 }
 export default class NumberUtil {
-    static formatMoney(number?: number, config?: IFormatMoneyConfig): string;
+    static formatMoney(number?: number, config?: IFormatMoneyConfig): string | {
+        result: string;
+        unit: string;
+    };
 }
