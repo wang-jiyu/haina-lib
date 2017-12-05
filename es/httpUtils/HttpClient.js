@@ -1,16 +1,10 @@
-define(["require", "exports", "axios", "./const/index"], function (require, exports, axios_1, index_1) {
+define(["require", "exports", "axios"], function (require, exports, axios_1) {
     "use strict";
     Object.defineProperty(exports, "__esModule", { value: true });
-    class Request {
-        constructor(domainName) {
-            this.domainName = domainName;
-            this.axiosInstance = axios_1.default.create({
-                baseURL: index_1.BaseUrl[domainName][process && process.env.NODE_ENV]
-            });
-        }
-        get(url, config) {
+    class HttpClient {
+        static get(domainName, url, config) {
             return new Promise((resolve, reject) => {
-                this.axiosInstance.get(url, config).then(res => {
+                axios_1.default.get(url, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -22,9 +16,9 @@ define(["require", "exports", "axios", "./const/index"], function (require, expo
                 });
             });
         }
-        post(url, data, config) {
+        static post(domainName, url, data, config) {
             return new Promise((resolve, reject) => {
-                this.axiosInstance.post(url, data, config).then(res => {
+                axios_1.default.post(url, data, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -36,9 +30,9 @@ define(["require", "exports", "axios", "./const/index"], function (require, expo
                 });
             });
         }
-        put(url, data, config) {
+        static put(domainName, url, data, config) {
             return new Promise((resolve, reject) => {
-                this.axiosInstance.put(url, data, config).then(res => {
+                axios_1.default.put(url, data, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -50,9 +44,9 @@ define(["require", "exports", "axios", "./const/index"], function (require, expo
                 });
             });
         }
-        delete(url, config) {
+        static delete(domainName, url, config) {
             return new Promise((resolve, reject) => {
-                this.axiosInstance.delete(url, config).then(res => {
+                axios_1.default.delete(url, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -65,11 +59,5 @@ define(["require", "exports", "axios", "./const/index"], function (require, expo
             });
         }
     }
-    exports.Request = Request;
-    exports.default = {
-        advisor: new Request('advisor'),
-        mapi: new Request('mapi'),
-        bigfund: new Request('bigfund'),
-        quant: new Request('quant')
-    };
+    exports.default = HttpClient;
 });
