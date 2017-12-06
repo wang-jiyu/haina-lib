@@ -18,6 +18,16 @@ define(["require", "exports"], function (require, exports) {
             });
             return item[key];
         }
+        static isApp() {
+            var ua = window.navigator.userAgent.toLowerCase();
+            return ua.indexOf('hayner') > 1;
+        }
+        static isIOS() {
+            return window.navigator.appVersion.match(/iphone|iPad|iPod|iOS/gi);
+        }
+        static isAndroid() {
+            return window.navigator.appVersion.match(/android/gi);
+        }
     }
     exports.default = Utils;
 });

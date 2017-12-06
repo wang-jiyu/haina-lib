@@ -62,9 +62,9 @@ export default class NativeJs {
 	 * 应用内部跳转
 	 * @param router 
 	 */
-	static gorouter(router:string): any {
+	static gorouter(router:string,iosRouter): any {
 		
-		return baseNativeJs('gorouter',{router})
+		return baseNativeJs('gorouter',{router},{router:iosRouter})
 	}
 
 	/**
@@ -114,4 +114,53 @@ export default class NativeJs {
 	static share(shareValue:IShareValue){
 		baseNativeJs('shareFriends',shareValue)
 	}
+
+    
+    /**
+     * 
+     * @param product_id 适当性检测
+     * @param risk_score 
+     */
+
+	static ihanerFSP(product_id: string, risk_score: string) {
+		baseNativeJs('ihanerFSP', { product_id, risk_score })
+	}
+
+	/**
+	 * 
+	 * @param stocknSid 股票id
+	 */
+	static gotoStockDetailPage(stocknSid: string) {
+		baseNativeJs('gotoStockDetailPage', { stocknSid })
+	}
+
+	/**
+	 * 
+	 * @param router跳转战队直播室 
+	 * ihayner://homelive:10060?param={"data":"{\"liveRoomType\":0,\"roomId\":\"71314e37e7c790c95af57bcb\",\"serviceId\":\"558a3e9025ea5de341f5203d\",\"type\":0}","defaultParam":"2"}
+	 */
+	static gotoLiveDetailPage(liveType: string,roomId:string, serviceId: string) {
+		
+		const router = {
+			host:`ihayner://homelive:10060?`,
+			param:{
+				data:{
+					roomId:roomId,
+					serviceId
+				},
+				defaultParam:liveType
+			}
+		}
+		const IOSRouter = `ihayner://homelive:10060?param={"data":"{\"liveType\":${liveType},\"roomId\":\"${roomId}\",\"serviceId\":\"${serviceId}\"}","defaultParam":"2"}`
+		NativeJs.gorouter(JSON.stringify(router),IOSRouter)
+	}
+
+
+	/**
+	 * 
+	 * @param router跳转直播列表 
+	 */
+	// static gotoLiveListPage(router: string) {
+	// 	NativeJs.gorouter(router)
+	// }
 }

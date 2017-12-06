@@ -4,7 +4,7 @@ define(["require", "exports", "axios"], function (require, exports, axios_1) {
     class HttpClient {
         static get(domainName, url, config) {
             return new Promise((resolve, reject) => {
-                axios_1.default.get(url, config).then(res => {
+                axios_1.default.get(`${domainName}${url}`, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -18,7 +18,7 @@ define(["require", "exports", "axios"], function (require, exports, axios_1) {
         }
         static post(domainName, url, data, config) {
             return new Promise((resolve, reject) => {
-                axios_1.default.post(url, data, config).then(res => {
+                axios_1.default.post(`${domainName}${url}`, data, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -32,7 +32,7 @@ define(["require", "exports", "axios"], function (require, exports, axios_1) {
         }
         static put(domainName, url, data, config) {
             return new Promise((resolve, reject) => {
-                axios_1.default.put(url, data, config).then(res => {
+                axios_1.default.put(`${domainName}${url}`, data, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
@@ -46,7 +46,7 @@ define(["require", "exports", "axios"], function (require, exports, axios_1) {
         }
         static delete(domainName, url, config) {
             return new Promise((resolve, reject) => {
-                axios_1.default.delete(url, config).then(res => {
+                axios_1.default.delete(`${domainName}${url}`, config).then(res => {
                     if (res.data.code === 200) {
                         resolve(res.data.data);
                     }
