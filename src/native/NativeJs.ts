@@ -24,7 +24,7 @@ export default class NativeJs {
 	 * @param callback 
 	 */
 	static login(callback: Function): any {
-		window['refreshtoken'] = function (result) {
+		window['refreshtoken'] = function (result:any) {
 			delete window['refreshtoken'];
 			try {
 				result = result;
@@ -62,7 +62,7 @@ export default class NativeJs {
 	 * 应用内部跳转
 	 * @param router 
 	 */
-	static gorouter(router:string,iosRouter): any {
+	static gorouter(router:string,iosRouter:string): any {
 		
 		return baseNativeJs('gorouter',{router},{router:iosRouter})
 	}

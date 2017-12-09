@@ -1,6 +1,6 @@
 {
   "name": "@com.haina.web/haina-lib",
-  "version": "1.0.2",
+  "version": "1.0.8",
   "description": "haina-lib",
   "main": "index.js",
   "scripts": {
@@ -16,7 +16,8 @@
   "author": "sunlandong",
   "license": "ISC",
   "dependencies": {
-    "axios": "^0.17.1"
+    "axios": "^0.17.1",
+    "pako": "^1.0.6"
   },
   "devDependencies": {
     "@types/node": "^8.0.53",

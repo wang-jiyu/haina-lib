@@ -26,7 +26,8 @@ define(["require", "exports"], function (require, exports) {
             places = Number.isInteger(number) ? 0 : places;
             let i = parseInt(Math.abs(number || 0).toFixed(places), 10);
             let is = i + "";
-            var j = (j = is.length) > 3 ? j % 3 : 0;
+            let m = is.length;
+            var j = m > 3 ? m % 3 : 0;
             var result = symbol + negative + (j ? is.substr(0, j) + thousand : "") + is.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + thousand) + (places ? decimal + (Math.abs(number) - i).toFixed(places).slice(2) : "");
             return autoUnit ? { result, unit: unitStr } : result;
         }

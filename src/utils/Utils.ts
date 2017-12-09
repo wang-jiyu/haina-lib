@@ -16,26 +16,26 @@ export default class Utils {
     }
 
     static getQuertString(key: string): string {
-        let qs = window.location.search.substr(1), // 获取url中"?"符后的字串   
-            items = qs.length ? qs.split("&") : [] // 取得每一个参数项,
-        const item = items.filter(item => {
-            return item.split("=")[0] === key
-        })
-
-        return item[key];
+        let reg = new RegExp("(^|&)" + key + "=([^&]*)(&|$)");
+        let r = window.location.search.substr(1).match(reg);
+        if (r != null) return decodeURI(r[2]);
+        return null;
     }
 
-    static isApp(){
+    static isApp() {
         var ua = window.navigator.userAgent.toLowerCase();
         return ua.indexOf('hayner') > 1
     }
 
-    static isIOS(){
+    static isIOS() {
         return window.navigator.appVersion.match(/iphone|iPad|iPod|iOS/gi)
     }
 
-    static isAndroid(){
+    static isAndroid() {
         return window.navigator.appVersion.match(/android/gi)
     }
 
+    static isPhone(phone:string) {
+        return /^1[3|4|5|8][0-9]\d{4,8}$/.test(phone.replace(/\s+/g,""))
+    }
 }
