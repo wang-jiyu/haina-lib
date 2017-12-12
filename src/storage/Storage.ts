@@ -11,7 +11,7 @@ export default class Storage {
 
     static set(key:string,value:any,isjson?:boolean){
         
-        return window.localStorage.setItem(key,JSON.stringify(value))
+        return window.localStorage.setItem(key,isjson?value:JSON.stringify(value))
     }
 
     static remove(key:string){

@@ -36,6 +36,13 @@ export default class Utils {
     }
 
     static isPhone(phone:string) {
-        return /^1[3|4|5|8][0-9]\d{4,8}$/.test(phone.replace(/\s+/g,""))
+        return /^1[3|4|5|8][0-9]\d{8}$/.test(phone.replace(/\s+/g,""))
+    }
+
+    static getRealByFontSize(value:number):number {
+        let base = value / 100
+        let fontSize = Number.parseFloat(document.documentElement.style.fontSize)
+
+        return base * fontSize
     }
 }

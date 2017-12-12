@@ -1,5 +1,6 @@
-
-export const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
+const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
+	console.log("funcName",funcName)
+	console.log("params",params)
 	if (typeof window['webkit'] != 'undefined') {
 		const realParam = ios ? Object.assign({}, {
 			"nativeCallJS": funcName
@@ -16,13 +17,8 @@ export const baseNativeJs = (funcName: string, params?: object, ios?: object) =>
 	}
 }
 import {IShareValue} from './NativeInterface'
-export default class NativeJs {
+class NativeJs {
 
-	static baseWindow (funcName:string) {
-		window[funcName]=function(){
-			delete window[funcName];
-		}
-	}
 	/**
 	 * 登陆
 	 * 返回token
@@ -59,7 +55,7 @@ export default class NativeJs {
 		// 		console.log('出错！');
 		// 	}
 		// }
-		NativeJs.baseWindow("topay")
+
 		return baseNativeJs("topay", { id: ref_id, type: ref_type, ...buyCycle }, { ref_id, ref_type, ...buyCycle });
 	}
 
@@ -68,7 +64,7 @@ export default class NativeJs {
 	 * @param router 
 	 */
 	static gorouter(router:string,iosRouter:string): any {
-		NativeJs.baseWindow("gorouter")
+		
 		return baseNativeJs('gorouter',{router},{router:iosRouter})
 	}
 
@@ -85,8 +81,7 @@ export default class NativeJs {
 	 * @param url 本身的链接
 	 */
 	static shareWeiXin(shareValue:IShareValue){
-		NativeJs.baseWindow("shareWeiXin")
-		baseNativeJs('shareWeiXin',{shareValue})
+		baseNativeJs('shareWeiXin',shareValue)
 	}
 
 	/**
@@ -102,8 +97,7 @@ export default class NativeJs {
 	 * @param url 本身的链接
 	 */
 	static shareFriends(shareValue:IShareValue){
-		NativeJs.baseWindow("shareFriends")
-		baseNativeJs('shareFriends',{shareValue})
+		baseNativeJs('shareFriends',shareValue)
 	}
 
 	/**
@@ -119,8 +113,7 @@ export default class NativeJs {
 	 * @param url 本身的链接
 	 */
 	static share(shareValue:IShareValue){
-		NativeJs.baseWindow("share")
-		baseNativeJs('share',{shareValue})
+		baseNativeJs('shareFriends',shareValue)
 	}
 
     
@@ -131,7 +124,6 @@ export default class NativeJs {
      */
 
 	static ihanerFSP(product_id: string, risk_score: string) {
-		NativeJs.baseWindow("ihanerFSP")
 		baseNativeJs('ihanerFSP', { product_id, risk_score })
 	}
 
@@ -139,25 +131,8 @@ export default class NativeJs {
 	 * 
 	 * @param stocknSid 股票id
 	 */
-	static baseGoRouter(host: string, param:string|object) {
-		const router = {
-			host:host,
-			param:typeof param ==='string' ?'param':Object.keys(param).map((key)=>`${key}=${param[key]}`).join("&")
-		}
-		
-		const IOSRouter = {
-            data: param
-		};
-		const IOSRouterss = `${host}param=${JSON.stringify(IOSRouter)}`
-		NativeJs.gorouter(JSON.stringify(router),IOSRouterss)
-	}
-
-	/**
-	 * 
-	 * @param stocknSid 股票id
-	 */
 	static gotoStockDetailPage(stocknSid: string) {
-		NativeJs.baseGoRouter('ihayner://stockdetail:11001?',stocknSid)
+		baseNativeJs('gotoStockDetailPage', { stocknSid })
 	}
 
 	/**
@@ -177,7 +152,6 @@ export default class NativeJs {
 				defaultParam:liveType
 			}
 		}
-		
 		const IOSRouter = {
             data: {
                 liveType: liveType,
@@ -185,7 +159,7 @@ export default class NativeJs {
                 serviceId: serviceId
             },
             defaultParam: "2"
-		};
+        };
 		const IOSRouterss = `ihayner://homelive:10060?param=${JSON.stringify(IOSRouter)}`
 		NativeJs.gorouter(JSON.stringify(router),IOSRouterss)
 	}

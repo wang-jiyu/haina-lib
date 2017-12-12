@@ -5,4 +5,5 @@ export default class Utils {
     static isIOS(): RegExpMatchArray;
     static isAndroid(): RegExpMatchArray;
     static isPhone(phone: string): boolean;
+    static getRealByFontSize(value: number): number;
 }
