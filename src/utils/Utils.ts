@@ -43,6 +43,6 @@ export default class Utils {
         let base = value / 100
         let fontSize = Number.parseFloat(document.documentElement.style.fontSize)
 
-        return base * fontSize
+        return base * fontSize 
     }
 }

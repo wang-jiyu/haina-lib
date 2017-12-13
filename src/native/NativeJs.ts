@@ -45,6 +45,14 @@ export default class NativeJs {
 	}
 
 	/**
+	 * 刷新token
+	 */
+	static refreshtoken_load(): any {
+		
+		return baseNativeJs("refreshtoken_reload")
+	}
+
+	/**
 	 * 跳转支付
 	 * @param ref_id  产品id
 	 * @param ref_type 产品类型

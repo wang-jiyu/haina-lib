@@ -3,6 +3,7 @@ import { IShareValue } from './NativeInterface';
 export default class NativeJs {
     static baseWindow(funcName: string): void;
     static login(callback: Function): any;
+    static refreshtoken_load(): any;
     static toPay(ref_id: any, ref_type: any, buyCycle?: object): any;
     static gorouter(router: string, iosRouter: string): any;
     static shareWeiXin(shareValue: IShareValue): void;

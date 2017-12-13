@@ -1,6 +1,6 @@
 {
   "name": "@com.haina.web/haina-lib",
-  "version": "1.0.15",
+  "version": "1.0.16",
   "description": "haina-lib",
   "main": "index.js",
   "scripts": {
