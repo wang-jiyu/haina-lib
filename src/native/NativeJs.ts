@@ -150,7 +150,7 @@ export default class NativeJs {
 	static baseGoRouter(host: string, param:string|object) {
 		const router = {
 			host:host,
-			param:typeof param ==='string' ?'param':Object.keys(param).map((key)=>`${key}=${param[key]}`).join("&")
+			param:typeof param ==='string' ?param:Object.keys(param).map((key)=>`${key}=${param[key]}`).join("&")
 		}
 		
 		const IOSRouter = {
