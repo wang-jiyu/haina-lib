@@ -145,7 +145,7 @@ export default class NativeJs {
 
 	/**
 	 * 
-	 * @param stocknSid 股票id
+	 * @param 跳转
 	 */
 	static baseGoRouter(host: string, param:string|object) {
 		const router = {

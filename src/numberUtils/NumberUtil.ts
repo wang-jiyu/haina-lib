@@ -29,18 +29,21 @@ export default class NumberUtil {
             autoUnit: false
         }, { ...config })
         let { places, thousand, decimal, symbol, unit, autoUnit } = param
-        let unitStr = ''
+        let unitStr = '元'
         let negative = number < 0 ? "-" : ""
         number = number / unit
-        if(autoUnit){
-            if(number>99999999){
-                number = number / 100000000
-            }else if(number>9999){
-                number = number / 10000
-            }
-        }
+       
         places = Number.isInteger(number) ? 0 : places
         let i = parseInt(Math.abs(number || 0).toFixed(places), 10)
+        if(autoUnit){
+            if(i>99999999){
+                i = i / 100000000
+                unitStr = '亿'
+            }else if(i>9999){
+                i = i / 10000
+                unitStr = '万'
+            }
+        }
         let is = i + ""
         let m = is.length
         var j = m > 3 ? m % 3 : 0;
