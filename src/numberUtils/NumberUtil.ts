@@ -32,18 +32,17 @@ export default class NumberUtil {
         let unitStr = '元'
         let negative = number < 0 ? "-" : ""
         number = number / unit
-       
-        places = Number.isInteger(number) ? 0 : places
-        let i = parseInt(Math.abs(number || 0).toFixed(places), 10)
         if(autoUnit){
-            if(i>99999999){
-                i = i / 100000000
+            if(Math.abs(number)>99999999){
+                number = number / 100000000
                 unitStr = '亿'
-            }else if(i>9999){
-                i = i / 10000
+            }else if(Math.abs(number)>9999){
+                number = number / 10000
                 unitStr = '万'
             }
         }
+        places = Number.isInteger(number) ? 0 : places
+        let i = parseInt(Math.abs(number || 0).toFixed(places), 10)
         let is = i + ""
         let m = is.length
         var j = m > 3 ? m % 3 : 0;

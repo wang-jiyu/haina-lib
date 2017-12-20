@@ -13,4 +13,5 @@ export default class NativeJs {
     static baseGoRouter(host: string, param: string | object): void;
     static gotoStockDetailPage(stocknSid: string): void;
     static gotoLiveDetailPage(liveType: string, roomId: string, serviceId: string): void;
+    static gotoLiveListPage(): void;
 }

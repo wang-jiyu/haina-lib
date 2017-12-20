@@ -126,9 +126,17 @@ export default class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static share(shareValue:IShareValue){
-		NativeJs.baseWindow("share")
-		baseNativeJs('share',{shareValue})
+	static share(shareValue:{
+		"desc":string,
+		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
+		"shareType": 'all',
+		"site": '海纳智投',
+		"siteUrl": string,
+		"title": string,
+		"titleUrl": string,
+		"url": string
+	}){
+		window['share'] = baseNativeJs('share',{shareValue})
 	}
 
     
@@ -203,7 +211,7 @@ export default class NativeJs {
 	 * 
 	 * @param router跳转直播列表 
 	 */
-	// static gotoLiveListPage(router: string) {
-	// 	NativeJs.gorouter(router)
-	// }
+	static gotoLiveListPage() {
+		NativeJs.baseGoRouter('ihayner://livelist_activity:10061?',"") 
+	}
 }
