@@ -6,9 +6,18 @@ export default class NativeJs {
     static refreshtoken_load(): any;
     static toPay(ref_id: any, ref_type: any, buyCycle?: object): any;
     static gorouter(router: string, iosRouter: string): any;
-    static shareWeiXin(shareValue: IShareValue): void;
-    static shareFriends(shareValue: IShareValue): void;
-    static share(shareValue: IShareValue): void;
+    static shareWeiXin(sharevalue: IShareValue): void;
+    static shareFriends(sharevalue: IShareValue): void;
+    static share(sharevalue: {
+        "desc": string;
+        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
+        "shareType": 'all';
+        "site": '海纳智投';
+        "siteUrl": string;
+        "title": string;
+        "titleUrl": string;
+        "url": string;
+    }): void;
     static ihanerFSP(product_id: string, risk_score: string): void;
     static baseGoRouter(host: string, param: string | object): void;
     static gotoStockDetailPage(stocknSid: string): void;
