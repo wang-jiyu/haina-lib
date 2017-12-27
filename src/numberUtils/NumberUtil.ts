@@ -6,11 +6,12 @@ export interface IFormatMoneyConfig {
     decimal?: string,
     symbol?: string,
     unit?:number,
-    autoUnit?:boolean
+    autoUnit?:boolean,
+    autoPlaces:boolean
 }
 export default class NumberUtil {
     /**
-     * 
+     *
      * @param number 需要格式化的数字 默认所有数字是精确到分的
      * @param places 需要保留的小数位
      * @param symbol 需要使用的金额标识，￥，$等
@@ -26,9 +27,10 @@ export default class NumberUtil {
             decimal: '.',
             symbol: '',
             unit: 1,
-            autoUnit: false
+            autoUnit: false,
+            autoPlacesL:true
         }, { ...config })
-        let { places, thousand, decimal, symbol, unit, autoUnit } = param
+        let { places, thousand, decimal, symbol, unit, autoUnit,autoPlaces } = param
         let unitStr = '元'
         let negative = number < 0 ? "-" : ""
         number = number / unit
@@ -41,7 +43,9 @@ export default class NumberUtil {
                 unitStr = '万'
             }
         }
-        places = Number.isInteger(number) ? 0 : places
+        if(autoPlaces){
+            places = Number.isInteger(number) ? 0 : places
+        }
         let i = parseInt(Math.abs(number || 0).toFixed(places), 10)
         let is = i + ""
         let m = is.length
