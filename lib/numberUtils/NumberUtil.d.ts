@@ -5,6 +5,7 @@ export interface IFormatMoneyConfig {
     symbol?: string;
     unit?: number;
     autoUnit?: boolean;
+    autoPlaces?: boolean;
 }
 export default class NumberUtil {
     static formatMoney(number?: number, config?: IFormatMoneyConfig): any;

@@ -6,7 +6,8 @@ export interface IFormatMoneyConfig {
     decimal?: string,
     symbol?: string,
     unit?:number,
-    autoUnit?:boolean
+    autoUnit?:boolean,
+    autoPlaces?:boolean
 }
 export default class NumberUtil {
     /**
@@ -26,14 +27,17 @@ export default class NumberUtil {
             decimal: '.',
             symbol: '',
             unit: 1,
-            autoUnit: false
+            autoUnit: false,
+            autoPlaces:true
         }, { ...config })
-        let { places, thousand, decimal, symbol, unit, autoUnit } = param
+        let { places, thousand, decimal, symbol, unit, autoUnit,autoPlaces } = param
         let unitStr = '元'
         let negative = number < 0 ? "-" : ""
         number = number / unit
-       
-        places = Number.isInteger(number) ? 0 : places
+
+        if(autoPlaces){
+            places = Number.isInteger(number) ? 0 : places
+        }
         let i = parseInt(Math.abs(number || 0).toFixed(places), 10)
         if(autoUnit){
             if(i>99999999){
