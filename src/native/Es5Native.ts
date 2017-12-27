@@ -1,6 +1,34 @@
+if (typeof Object.assign != 'function') {
+	// Must be writable: true, enumerable: false, configurable: true
+	Object.defineProperty(Object, "assign", {
+		value: function assign(target, varArgs) { // .length of function is 2
+			'use strict';
+			if (target == null) { // TypeError if undefined or null
+				throw new TypeError('Cannot convert undefined or null to object');
+			}
+
+			var to = Object(target);
+
+			for (var index = 1; index < arguments.length; index++) {
+				var nextSource = arguments[index];
+
+				if (nextSource != null) { // Skip over if undefined or null
+					for (var nextKey in nextSource) {
+						// Avoid bugs when hasOwnProperty is shadowed
+						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+							to[nextKey] = nextSource[nextKey];
+						}
+					}
+				}
+			}
+			return to;
+		},
+		writable: true,
+		configurable: true
+	});
+}
+
 const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
-	console.log("funcName",funcName)
-	console.log("params",params)
 	if (typeof window['webkit'] != 'undefined') {
 		const realParam = ios ? Object.assign({}, {
 			"nativeCallJS": funcName
@@ -19,6 +47,11 @@ const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
 import {IShareValue} from './NativeInterface'
 class NativeJs {
 
+	static baseWindow (funcName:string) {
+		window[funcName]=function(){
+			delete window[funcName];
+		}
+	}
 	/**
 	 * 登陆
 	 * 返回token
@@ -41,6 +74,14 @@ class NativeJs {
 	}
 
 	/**
+	 * 刷新token
+	 */
+	static refreshtoken_load(): any {
+		
+		return baseNativeJs("refreshtoken_reload")
+	}
+
+	/**
 	 * 跳转支付
 	 * @param ref_id  产品id
 	 * @param ref_type 产品类型
@@ -55,7 +96,6 @@ class NativeJs {
 		// 		console.log('出错！');
 		// 	}
 		// }
-
 		return baseNativeJs("topay", { id: ref_id, type: ref_type, ...buyCycle }, { ref_id, ref_type, ...buyCycle });
 	}
 
@@ -64,7 +104,6 @@ class NativeJs {
 	 * @param router 
 	 */
 	static gorouter(router:string,iosRouter:string): any {
-		
 		return baseNativeJs('gorouter',{router},{router:iosRouter})
 	}
 
@@ -81,7 +120,7 @@ class NativeJs {
 	 * @param url 本身的链接
 	 */
 	static shareWeiXin(shareValue:IShareValue){
-		baseNativeJs('shareWeiXin',shareValue)
+		baseNativeJs('shareWeiXin',{shareValue})
 	}
 
 	/**
@@ -97,7 +136,7 @@ class NativeJs {
 	 * @param url 本身的链接
 	 */
 	static shareFriends(shareValue:IShareValue){
-		baseNativeJs('shareFriends',shareValue)
+		baseNativeJs('shareFriends',{shareValue})
 	}
 
 	/**
@@ -112,8 +151,17 @@ class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static share(shareValue:IShareValue){
-		baseNativeJs('shareFriends',shareValue)
+	static share(sharevalue:{
+		"desc":string,
+		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
+		"shareType": 'all',
+		"site": '海纳智投',
+		"siteUrl": string,
+		"title": string,
+		"titleUrl": string,
+		"url": string
+	}){
+		baseNativeJs('share',{sharevalue})
 	}
 
     
@@ -129,10 +177,27 @@ class NativeJs {
 
 	/**
 	 * 
+	 * @param 跳转
+	 */
+	static baseGoRouter(host: string, param:string|object) {
+		const router = {
+			host:host,
+			param:typeof param ==='string' ?param:Object.keys(param).map((key)=>`${key}=${param[key]}`).join("&")
+		}
+		
+		const IOSRouter = {
+            data: param
+		};
+		const IOSRouterss = `${host}param=${JSON.stringify(IOSRouter)}`
+		NativeJs.gorouter(JSON.stringify(router),IOSRouterss)
+	}
+
+	/**
+	 * 
 	 * @param stocknSid 股票id
 	 */
 	static gotoStockDetailPage(stocknSid: string) {
-		baseNativeJs('gotoStockDetailPage', { stocknSid })
+		NativeJs.baseGoRouter('ihayner://stockdetail:11001?',stocknSid)
 	}
 
 	/**
@@ -152,6 +217,7 @@ class NativeJs {
 				defaultParam:liveType
 			}
 		}
+		
 		const IOSRouter = {
             data: {
                 liveType: liveType,
@@ -159,7 +225,7 @@ class NativeJs {
                 serviceId: serviceId
             },
             defaultParam: "2"
-        };
+		};
 		const IOSRouterss = `ihayner://homelive:10060?param=${JSON.stringify(IOSRouter)}`
 		NativeJs.gorouter(JSON.stringify(router),IOSRouterss)
 	}
@@ -169,7 +235,7 @@ class NativeJs {
 	 * 
 	 * @param router跳转直播列表 
 	 */
-	// static gotoLiveListPage(router: string) {
-	// 	NativeJs.gorouter(router)
-	// }
+	static gotoLiveListPage() {
+		NativeJs.baseGoRouter('ihayner://livelist_activity:10061?',"") 
+	}
 }
