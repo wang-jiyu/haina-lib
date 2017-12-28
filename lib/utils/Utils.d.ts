@@ -6,4 +6,5 @@ export default class Utils {
     static isAndroid(): RegExpMatchArray;
     static isPhone(phone: string): boolean;
     static getRealByFontSize(value: number): number;
+    static setDocumentTitle(title: string): void;
 }

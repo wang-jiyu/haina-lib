@@ -7,7 +7,7 @@ export interface IFormatMoneyConfig {
     symbol?: string,
     unit?:number,
     autoUnit?:boolean,
-    autoPlaces:boolean
+    autoPlaces?:boolean
 }
 export default class NumberUtil {
     /**
@@ -28,7 +28,7 @@ export default class NumberUtil {
             symbol: '',
             unit: 1,
             autoUnit: false,
-            autoPlacesL:true
+            autoPlaces:true
         }, { ...config })
         let { places, thousand, decimal, symbol, unit, autoUnit,autoPlaces } = param
         let unitStr = '元'
