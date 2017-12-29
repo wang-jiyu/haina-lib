@@ -23,7 +23,7 @@ export default class NativeJs {
     static gotoStockDetailPage(stocknSid: string): void;
     static gotoLiveDetailPage(liveType: string, roomId: string, serviceId: string): void;
     static gotoLiveListPage(): void;
-    static gotoBanner(config: {
+    static gotoBanner(bannerdata: {
         _id;
         create_time;
         image_url;
@@ -36,4 +36,6 @@ export default class NativeJs {
         link_type;
         ref_type;
     }): void;
+    static gotoHome(): void;
+    static tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell'): void;
 }

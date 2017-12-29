@@ -29,7 +29,7 @@ export const baseNativeJs = (funcName: string, params?: object, ios?: object) =>
 			// // let iframe = document.createElement("<iframe src='' style='display:none' target='' ></iframe>")
 			// document.body.appendChild(iframe);
 			// //没有安装应用会执行下面的语句
-			// setTimeout(function () { window.location.href = 'http://active2.0606.com.cn/' + 'download/download.html' }, 1000);
+			// setTimeout(function () { window.location.href = 'D' + 'download/download.html' }, 1000);
 
 		}
 	}
@@ -234,7 +234,21 @@ export default class NativeJs {
 	 * 
 	 * @param 跳转banner页 
 	 */
-	static gotoBanner(config:{_id,create_time,image_url,device_image_url,intro,link_url,order,target,title,link_type,ref_type}) {
-		baseNativeJs('banner',config)
+	static gotoBanner(bannerdata:{_id,create_time,image_url,device_image_url,intro,link_url,order,target,title,link_type,ref_type}) {
+		baseNativeJs('banner',{bannerdata})
+	}
+
+	/**
+	 * 跳转首页
+	 */
+	static gotoHome(){
+		NativeJs.baseGoRouter('ihayner://homepage:10002?',"")
+	}
+
+	/**
+	 * 跳转交易
+	 */
+	static tradeStock(stock_name:string,stock_code:string,buyorsell:'buy'|'sell'){
+		baseNativeJs('tradeStock',{stock_name,stock_code,buyorsell})
 	}
 }
