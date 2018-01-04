@@ -266,4 +266,6 @@ export default class NativeJs {
 	static changeBodyFontSize(isshow){
 		baseNativeJs("changeBodyFontSize",{isshow})
 	}
+
+	
 }
