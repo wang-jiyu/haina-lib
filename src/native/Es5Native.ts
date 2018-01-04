@@ -28,27 +28,46 @@ if (typeof Object.assign != 'function') {
 	});
 }
 
+import Utils from '../utils/Utils'
 const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
-	if (typeof window['webkit'] != 'undefined') {
-		const realParam = ios ? Object.assign({}, {
-			"nativeCallJS": funcName
-		}, { ...ios }) : Object.assign({}, {
-			"nativeCallJS": funcName
-		}, { ...params })
-		window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
-	} else if (/Android/i.test(window.navigator.userAgent)) {
-		const realParam = Object.assign({}, {
-			"nativecalljs": funcName
-		}, { ...params })				       //android
-		const paramstr = JSON.stringify(realParam)
-		window['haina'].pushEvent(paramstr);
-	}
-}
-import {IShareValue} from './NativeInterface'
-class NativeJs {
+	if (Utils.isApp()) {
+		if (typeof window['webkit'] != 'undefined') {
+			const realParam = ios ? Object.assign({}, {
+				"nativeCallJS": funcName
+			}, { ...ios }) : Object.assign({}, {
+				"nativeCallJS": funcName
+			}, { ...params })
+			window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
+		} else if (/Android/i.test(window.navigator.userAgent)) {
+			const realParam = Object.assign({}, {
+				"nativecalljs": funcName
+			}, { ...params })				       //android
+			const paramstr = JSON.stringify(realParam)
+			window['haina'].pushEvent(paramstr);
+		}
+	} else {
+		if (Utils.isIOS()) { //ios
+			/* EXACT:http://m-test.0606.com.cn/diagnose/js/floatwindow.js*/
+			// window.location.href = 'ihayner://diagnosis_stock_activity:10050';
+			// setTimeout(function () { window.location.href = 'itms-apps://itunes.apple.com/app/id1236797754' }, 1000);
+		} else if (Utils.isAndroid()) { //android
+			//此操作会调起app并阻止接下来的js执行
+			// let iframe = document.createElement("iframe")
+			// iframe.src = "ihayner://diagnosis_stock_activity:10050"
+			// iframe.style.display = "none"
+			// // let iframe = document.createElement("<iframe src='' style='display:none' target='' ></iframe>")
+			// document.body.appendChild(iframe);
+			// //没有安装应用会执行下面的语句
+			// setTimeout(function () { window.location.href = 'D' + 'download/download.html' }, 1000);
 
-	static baseWindow (funcName:string) {
-		window[funcName]=function(){
+		}
+	}
+
+}
+import { IShareValue } from './NativeInterface'
+class NativeJs {
+	static baseWindow(funcName: string) {
+		window[funcName] = function () {
 			delete window[funcName];
 		}
 	}
@@ -58,7 +77,7 @@ class NativeJs {
 	 * @param callback 
 	 */
 	static login(callback: Function): any {
-		window['refreshtoken'] = function (result:any) {
+		window['refreshtoken'] = function (result: any) {
 			delete window['refreshtoken'];
 			try {
 				result = result;
@@ -77,7 +96,7 @@ class NativeJs {
 	 * 刷新token
 	 */
 	static refreshtoken_load(): any {
-		
+
 		return baseNativeJs("refreshtoken_reload")
 	}
 
@@ -103,8 +122,8 @@ class NativeJs {
 	 * 应用内部跳转
 	 * @param router 
 	 */
-	static gorouter(router:string,iosRouter:string): any {
-		return baseNativeJs('gorouter',{router},{router:iosRouter})
+	static gorouter(router: string, iosRouter: string): any {
+		return baseNativeJs('gorouter', { router }, { router: iosRouter })
 	}
 
 	/**
@@ -119,8 +138,8 @@ class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static shareWeiXin(shareValue:IShareValue){
-		baseNativeJs('shareWeiXin',{shareValue})
+	static shareWeiXin(sharevalue: IShareValue) {
+		baseNativeJs('shareWeiXin', { sharevalue })
 	}
 
 	/**
@@ -135,8 +154,8 @@ class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static shareFriends(shareValue:IShareValue){
-		baseNativeJs('shareFriends',{shareValue})
+	static shareFriends(sharevalue: IShareValue) {
+		baseNativeJs('shareFriends', { sharevalue })
 	}
 
 	/**
@@ -151,8 +170,8 @@ class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static share(sharevalue:{
-		"desc":string,
+	static share(sharevalue: {
+		"desc": string,
 		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
 		"shareType": 'all',
 		"site": '海纳智投',
@@ -160,11 +179,11 @@ class NativeJs {
 		"title": string,
 		"titleUrl": string,
 		"url": string
-	}){
-		baseNativeJs('share',{sharevalue})
+	}) {
+		baseNativeJs('share', { sharevalue })
 	}
 
-    
+
     /**
      * 
      * @param product_id 适当性检测
@@ -179,17 +198,17 @@ class NativeJs {
 	 * 
 	 * @param 跳转
 	 */
-	static baseGoRouter(host: string, param:string|object) {
+	static baseGoRouter(host: string, param: string | object) {
 		const router = {
-			host:host,
-			param:typeof param ==='string' ?param:Object.keys(param).map((key)=>`${key}=${param[key]}`).join("&")
+			host: host,
+			param: typeof param === 'string' ? param : Object.keys(param).map((key) => `${key}=${param[key]}`).join("&")
 		}
-		
+
 		const IOSRouter = {
-            data: param
+			data: param
 		};
 		const IOSRouterss = `${host}param=${JSON.stringify(IOSRouter)}`
-		NativeJs.gorouter(JSON.stringify(router),IOSRouterss)
+		NativeJs.gorouter(JSON.stringify(router), IOSRouterss)
 	}
 
 	/**
@@ -197,7 +216,7 @@ class NativeJs {
 	 * @param stocknSid 股票id
 	 */
 	static gotoStockDetailPage(stocknSid: string) {
-		NativeJs.baseGoRouter('ihayner://stockdetail:11001?',stocknSid)
+		NativeJs.baseGoRouter('ihayner://stockdetail:11001?', stocknSid)
 	}
 
 	/**
@@ -205,29 +224,29 @@ class NativeJs {
 	 * @param router跳转战队直播室 
 	 * ihayner://homelive:10060?param={"data":"{\"liveRoomType\":0,\"roomId\":\"71314e37e7c790c95af57bcb\",\"serviceId\":\"558a3e9025ea5de341f5203d\",\"type\":0}","defaultParam":"2"}
 	 */
-	static gotoLiveDetailPage(liveType: string,roomId:string, serviceId: string) {
-		
+	static gotoLiveDetailPage(liveType: string, roomId: string, serviceId: string) {
+
 		const router = {
-			host:`ihayner://homelive:10060?`,
-			param:{
-				data:{
-					roomId:roomId,
+			host: `ihayner://homelive:10060?`,
+			param: {
+				data: {
+					roomId: roomId,
 					serviceId
 				},
-				defaultParam:liveType
+				defaultParam: liveType
 			}
 		}
-		
+
 		const IOSRouter = {
-            data: {
-                liveType: liveType,
-                roomId: roomId,
-                serviceId: serviceId
-            },
-            defaultParam: "2"
+			data: {
+				liveType: liveType,
+				roomId: roomId,
+				serviceId: serviceId
+			},
+			defaultParam: "2"
 		};
 		const IOSRouterss = `ihayner://homelive:10060?param=${JSON.stringify(IOSRouter)}`
-		NativeJs.gorouter(JSON.stringify(router),IOSRouterss)
+		NativeJs.gorouter(JSON.stringify(router), IOSRouterss)
 	}
 
 
@@ -236,6 +255,36 @@ class NativeJs {
 	 * @param router跳转直播列表 
 	 */
 	static gotoLiveListPage() {
-		NativeJs.baseGoRouter('ihayner://livelist_activity:10061?',"") 
+		NativeJs.baseGoRouter('ihayner://livelist_activity:10061?', "")
+	}
+
+	
+	/**
+	 * 
+	 * @param 跳转banner页 
+	 */
+	static gotoBanner(bannerdata:{_id,create_time,image_url,device_image_url,intro,link_url,order,target,title,link_type,ref_type}) {
+		baseNativeJs('banner',{bannerdata})
+	}
+
+	/**
+	 * 跳转首页
+	 */
+	static gotoHome(){
+		NativeJs.baseGoRouter('ihayner://homepage:10002?',"")
+	}
+
+	/**
+	 * 跳转交易
+	 */
+	static tradeStock(stock_name:string,stock_code:string,buyorsell:'buy'|'sell'){
+		baseNativeJs('tradeStock',{stock_name,stock_code,buyorsell})
+	}
+
+	/**
+	 * 跳转策略详情
+	 */
+	static operationboarddetail(strategyId){
+		NativeJs.baseGoRouter('ihayner://operationboarddetail:10033?',{id:strategyId})
 	}
 }

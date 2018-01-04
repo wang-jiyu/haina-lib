@@ -229,26 +229,41 @@ export default class NativeJs {
 		NativeJs.baseGoRouter('ihayner://livelist_activity:10061?', "")
 	}
 
-	
+
 	/**
 	 * 
 	 * @param 跳转banner页 
 	 */
-	static gotoBanner(bannerdata:{_id,create_time,image_url,device_image_url,intro,link_url,order,target,title,link_type,ref_type}) {
-		baseNativeJs('banner',{bannerdata})
+	static gotoBanner(bannerdata: { _id, create_time, image_url, device_image_url, intro, link_url, order, target, title, link_type, ref_type }) {
+		baseNativeJs('banner', { bannerdata })
 	}
 
 	/**
 	 * 跳转首页
 	 */
-	static gotoHome(){
-		NativeJs.baseGoRouter('ihayner://homepage:10002?',"")
+	static gotoHome() {
+		NativeJs.baseGoRouter('ihayner://homepage:10002?', "")
 	}
 
 	/**
 	 * 跳转交易
 	 */
-	static tradeStock(stock_name:string,stock_code:string,buyorsell:'buy'|'sell'){
-		baseNativeJs('tradeStock',{stock_name,stock_code,buyorsell})
+	static tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell') {
+		baseNativeJs('tradeStock', { stock_name, stock_code, buyorsell })
+	}
+
+	/**
+	 * 点击放大图片
+	 */
+	static imageClick(img_url) {
+		
+		baseNativeJs("imgClick",{img_url})
+	}
+
+	/**
+	 * 字体缩放
+	 */
+	static changeBodyFontSize(isshow){
+		baseNativeJs("changeBodyFontSize",{isshow})
 	}
 }
