@@ -39,5 +39,5 @@ export default class NativeJs {
     static gotoHome(): void;
     static tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell'): void;
     static imageClick(img_url: any): void;
-    static changeBodyFontSize(isshow: any): void;
+    static changeBodyFontSize(isshow: any, callback: any): void;
 }

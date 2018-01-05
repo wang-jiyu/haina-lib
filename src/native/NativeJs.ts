@@ -263,7 +263,19 @@ export default class NativeJs {
 	/**
 	 * 字体缩放
 	 */
-	static changeBodyFontSize(isshow){
+	static changeBodyFontSize(isshow,callback){
+		window['changeBodyFontSize'] = function (result: any) {
+			delete window['changeBodyFontSize'];
+			try {
+				result = result;
+			} catch (e) {
+				console.log('出错！');
+			}
+			if (result) {
+				callback(result);
+				// window['userInfo'].access_token=result;
+			}
+		}
 		baseNativeJs("changeBodyFontSize",{isshow})
 	}
 
