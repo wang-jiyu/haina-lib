@@ -40,4 +40,5 @@ export default class NativeJs {
     static tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell'): void;
     static imageClick(img_url: any): void;
     static changeBodyFontSize(isshow: any, callback: any): void;
+    optional(stock_method: boolean, stock_code: string): void;
 }

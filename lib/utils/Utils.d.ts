@@ -7,4 +7,5 @@ export default class Utils {
     static isPhone(phone: string): boolean;
     static getRealByFontSize(value: number): number;
     static setDocumentTitle(title: string): void;
+    static loadOutJS(jsurl: string, async?: boolean): void;
 }

@@ -265,7 +265,6 @@ export default class NativeJs {
 	 */
 	static changeBodyFontSize(isshow,callback){
 		window['changeBodyFontSize'] = function (result: any) {
-			delete window['changeBodyFontSize'];
 			try {
 				result = result;
 			} catch (e) {
@@ -279,5 +278,14 @@ export default class NativeJs {
 		baseNativeJs("changeBodyFontSize",{isshow})
 	}
 
+	
+    /**
+     * 自选股添加和删除
+     * @param stock_method 添加还是删除", （boolean值 默认false 删除）
+     * @param stock_code 股票代码
+     */
+    optional(stock_method:boolean,stock_code:string) {
+        baseNativeJs("optional",{stock_method,stock_code})
+    }
 	
 }
