@@ -1,7 +1,48 @@
 export default class Utils {
+    static phoneRegex: {
+        'ar-DZ': RegExp;
+        'ar-SY': RegExp;
+        'ar-SA': RegExp;
+        'en-US': RegExp;
+        'cs-CZ': RegExp;
+        'de-DE': RegExp;
+        'da-DK': RegExp;
+        'el-GR': RegExp;
+        'en-AU': RegExp;
+        'en-GB': RegExp;
+        'en-HK': RegExp;
+        'en-IN': RegExp;
+        'en-NZ': RegExp;
+        'en-ZA': RegExp;
+        'en-ZM': RegExp;
+        'es-ES': RegExp;
+        'fi-FI': RegExp;
+        'fr-FR': RegExp;
+        'he-IL': RegExp;
+        'hu-HU': RegExp;
+        'it-IT': RegExp;
+        'ja-JP': RegExp;
+        'ms-MY': RegExp;
+        'nb-NO': RegExp;
+        'nl-BE': RegExp;
+        'nn-NO': RegExp;
+        'pl-PL': RegExp;
+        'pt-BR': RegExp;
+        'pt-PT': RegExp;
+        'ru-RU': RegExp;
+        'sr-RS': RegExp;
+        'tr-TR': RegExp;
+        'vi-VN': RegExp;
+        'zh-CN': RegExp;
+        'zh-TW': RegExp;
+    };
     static UUID(): string;
     static getQuertString(key: string): string;
     static isApp(): boolean;
     static isIOS(): RegExpMatchArray;
     static isAndroid(): RegExpMatchArray;
+    static isPhone(phone: string): any;
+    static getRealByFontSize(value: number): number;
+    static setDocumentTitle(title: string): void;
+    static loadOutJS(jsurl: string, async?: boolean): void;
 }

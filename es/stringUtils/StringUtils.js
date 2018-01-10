@@ -1,19 +1,15 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-var pako = require("pako");
-var StringUtils = /** @class */ (function () {
-    function StringUtils() {
-    }
-    StringUtils.base64ZipToUtf8Array = function (res) {
-        var strData = window.atob(res);
-        var charData = strData.toString().split('').map(function (x) { return x.charCodeAt(0); });
-        var binData = new Uint8Array(charData);
-        var data = pako.inflate(binData);
+import * as pako from 'pako';
+export default class StringUtils {
+    static base64ZipToUtf8Array(res) {
+        let strData = window.atob(res);
+        let charData = strData.toString().split('').map(function (x) { return x.charCodeAt(0); });
+        let binData = new Uint8Array(charData);
+        let data = pako.inflate(binData);
         return data;
-    };
-    StringUtils.Utf8ArrayToStr = function (array) {
-        var out, i, len, c;
-        var char2, char3;
+    }
+    static Utf8ArrayToStr(array) {
+        let out, i, len, c;
+        let char2, char3;
         out = "";
         len = array.length;
         i = 0;
@@ -48,13 +44,13 @@ var StringUtils = /** @class */ (function () {
             }
         }
         return out;
-    };
-    StringUtils.largeUint8ArrToString = function (uint8arr) {
-        return new Promise(function (resolve, reject) {
-            var bb = new Blob([uint8arr]);
-            var f = new FileReader();
+    }
+    static largeUint8ArrToString(uint8arr) {
+        return new Promise((resolve, reject) => {
+            let bb = new Blob([uint8arr]);
+            let f = new FileReader();
             f.onload = function (e) {
-                var target = e.target;
+                const target = e.target;
                 resolve(target.result);
             };
             f.onerror = function (error) {
@@ -62,7 +58,5 @@ var StringUtils = /** @class */ (function () {
             };
             f.readAsText(bb);
         });
-    };
-    return StringUtils;
-}());
-exports.default = StringUtils;
+    }
+}

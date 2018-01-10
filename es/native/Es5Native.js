@@ -1,39 +1,55 @@
-"use strict";
-var __assign = (this && this.__assign) || Object.assign || function(t) {
-    for (var s, i = 1, n = arguments.length; i < n; i++) {
-        s = arguments[i];
-        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-            t[p] = s[p];
-    }
-    return t;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var Utils_1 = require("../utils/Utils");
-exports.baseNativeJs = function (funcName, params, ios) {
-    if (Utils_1.default.isApp()) {
+if (typeof Object.assign != 'function') {
+    // Must be writable: true, enumerable: false, configurable: true
+    Object.defineProperty(Object, "assign", {
+        value: function assign(target, varArgs) {
+            'use strict';
+            if (target == null) {
+                throw new TypeError('Cannot convert undefined or null to object');
+            }
+            var to = Object(target);
+            for (var index = 1; index < arguments.length; index++) {
+                var nextSource = arguments[index];
+                if (nextSource != null) {
+                    for (var nextKey in nextSource) {
+                        // Avoid bugs when hasOwnProperty is shadowed
+                        if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+                            to[nextKey] = nextSource[nextKey];
+                        }
+                    }
+                }
+            }
+            return to;
+        },
+        writable: true,
+        configurable: true
+    });
+}
+import Utils from '../utils/Utils';
+const baseNativeJs = (funcName, params, ios) => {
+    if (Utils.isApp()) {
         if (typeof window['webkit'] != 'undefined') {
-            var realParam = ios ? Object.assign({}, {
+            const realParam = ios ? Object.assign({}, {
                 "nativeCallJS": funcName
-            }, __assign({}, ios)) : Object.assign({}, {
+            }, Object.assign({}, ios)) : Object.assign({}, {
                 "nativeCallJS": funcName
-            }, __assign({}, params));
+            }, Object.assign({}, params));
             window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
         }
         else if (/Android/i.test(window.navigator.userAgent)) {
-            var realParam = Object.assign({}, {
+            const realParam = Object.assign({}, {
                 "nativecalljs": funcName
-            }, __assign({}, params)); //android
-            var paramstr = JSON.stringify(realParam);
+            }, Object.assign({}, params)); //android
+            const paramstr = JSON.stringify(realParam);
             window['haina'].pushEvent(paramstr);
         }
     }
     else {
-        if (Utils_1.default.isIOS()) {
+        if (Utils.isIOS()) {
             /* EXACT:http://m-test.0606.com.cn/diagnose/js/floatwindow.js*/
             // window.location.href = 'ihayner://diagnosis_stock_activity:10050';
             // setTimeout(function () { window.location.href = 'itms-apps://itunes.apple.com/app/id1236797754' }, 1000);
         }
-        else if (Utils_1.default.isAndroid()) {
+        else if (Utils.isAndroid()) {
             //此操作会调起app并阻止接下来的js执行
             // let iframe = document.createElement("iframe")
             // iframe.src = "ihayner://diagnosis_stock_activity:10050"
@@ -45,20 +61,18 @@ exports.baseNativeJs = function (funcName, params, ios) {
         }
     }
 };
-var NativeJs = /** @class */ (function () {
-    function NativeJs() {
-    }
-    NativeJs.baseWindow = function (funcName) {
+class NativeJs {
+    static baseWindow(funcName) {
         window[funcName] = function () {
             delete window[funcName];
         };
-    };
+    }
     /**
      * 登陆
      * 返回token
      * @param callback
      */
-    NativeJs.login = function (callback) {
+    static login(callback) {
         window['refreshtoken'] = function (result) {
             delete window['refreshtoken'];
             try {
@@ -72,21 +86,21 @@ var NativeJs = /** @class */ (function () {
                 // window['userInfo'].access_token=result;
             }
         };
-        return exports.baseNativeJs("refreshtoken");
-    };
+        return baseNativeJs("refreshtoken");
+    }
     /**
      * 刷新token
      */
-    NativeJs.refreshtoken_load = function () {
-        return exports.baseNativeJs("refreshtoken_reload");
-    };
+    static refreshtoken_load() {
+        return baseNativeJs("refreshtoken_reload");
+    }
     /**
      * 跳转支付
      * @param ref_id  产品id
      * @param ref_type 产品类型
      * @param buyCycle 限制体验支付，或者自实现支付列表的时候，需要传此参数
      */
-    NativeJs.toPay = function (ref_id, ref_type, buyCycle) {
+    static toPay(ref_id, ref_type, buyCycle) {
         // window['topay'] = function () {
         // 	delete window['topay'];
         // 	try {
@@ -95,15 +109,15 @@ var NativeJs = /** @class */ (function () {
         // 		console.log('出错！');
         // 	}
         // }
-        return exports.baseNativeJs("topay", __assign({ id: ref_id, type: ref_type }, buyCycle), __assign({ ref_id: ref_id, ref_type: ref_type }, buyCycle));
-    };
+        return baseNativeJs("topay", Object.assign({ id: ref_id, type: ref_type }, buyCycle), Object.assign({ ref_id, ref_type }, buyCycle));
+    }
     /**
      * 应用内部跳转
      * @param router
      */
-    NativeJs.gorouter = function (router, iosRouter) {
-        return exports.baseNativeJs('gorouter', { router: router }, { router: iosRouter });
-    };
+    static gorouter(router, iosRouter) {
+        return baseNativeJs('gorouter', { router }, { router: iosRouter });
+    }
     /**
      * 分享到微信
      * @param shareValue
@@ -116,9 +130,9 @@ var NativeJs = /** @class */ (function () {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    NativeJs.shareWeiXin = function (sharevalue) {
-        exports.baseNativeJs('shareWeiXin', { sharevalue: sharevalue });
-    };
+    static shareWeiXin(sharevalue) {
+        baseNativeJs('shareWeiXin', { sharevalue });
+    }
     /**
      * 分享到朋友圈
      * @param shareFriends
@@ -131,9 +145,9 @@ var NativeJs = /** @class */ (function () {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    NativeJs.shareFriends = function (sharevalue) {
-        exports.baseNativeJs('shareFriends', { sharevalue: sharevalue });
-    };
+    static shareFriends(sharevalue) {
+        baseNativeJs('shareFriends', { sharevalue });
+    }
     /**
      * 调用移动端的分享
      * @param shareFriends
@@ -146,56 +160,56 @@ var NativeJs = /** @class */ (function () {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    NativeJs.share = function (sharevalue) {
-        exports.baseNativeJs('share', { sharevalue: sharevalue });
-    };
+    static share(sharevalue) {
+        baseNativeJs('share', { sharevalue });
+    }
     /**
      *
      * @param product_id 适当性检测
      * @param risk_score
      */
-    NativeJs.ihanerFSP = function (product_id, risk_score) {
-        exports.baseNativeJs('ihanerFSP', { product_id: product_id, risk_score: risk_score });
-    };
+    static ihanerFSP(product_id, risk_score) {
+        baseNativeJs('ihanerFSP', { product_id, risk_score });
+    }
     /**
      *
      * @param 跳转
      */
-    NativeJs.baseGoRouter = function (host, param) {
-        var router = {
+    static baseGoRouter(host, param) {
+        const router = {
             host: host,
-            param: typeof param === 'string' ? param : Object.keys(param).map(function (key) { return key + "=" + param[key]; }).join("&")
+            param: typeof param === 'string' ? param : Object.keys(param).map((key) => `${key}=${param[key]}`).join("&")
         };
-        var IOSRouter = {
+        const IOSRouter = {
             data: param
         };
-        var IOSRouterss = host + "param=" + JSON.stringify(IOSRouter);
+        const IOSRouterss = `${host}param=${JSON.stringify(IOSRouter)}`;
         NativeJs.gorouter(JSON.stringify(router), IOSRouterss);
-    };
+    }
     /**
      *
      * @param stocknSid 股票id
      */
-    NativeJs.gotoStockDetailPage = function (stocknSid) {
+    static gotoStockDetailPage(stocknSid) {
         NativeJs.baseGoRouter('ihayner://stockdetail:11001?', stocknSid);
-    };
+    }
     /**
      *
      * @param router跳转战队直播室
      * ihayner://homelive:10060?param={"data":"{\"liveRoomType\":0,\"roomId\":\"71314e37e7c790c95af57bcb\",\"serviceId\":\"558a3e9025ea5de341f5203d\",\"type\":0}","defaultParam":"2"}
      */
-    NativeJs.gotoLiveDetailPage = function (liveType, roomId, serviceId) {
-        var router = {
-            host: "ihayner://homelive:10060?",
+    static gotoLiveDetailPage(liveType, roomId, serviceId) {
+        const router = {
+            host: `ihayner://homelive:10060?`,
             param: {
                 data: {
                     roomId: roomId,
-                    serviceId: serviceId
+                    serviceId
                 },
                 defaultParam: liveType
             }
         };
-        var IOSRouter = {
+        const IOSRouter = {
             data: {
                 liveType: liveType,
                 roomId: roomId,
@@ -203,67 +217,39 @@ var NativeJs = /** @class */ (function () {
             },
             defaultParam: "2"
         };
-        var IOSRouterss = "ihayner://homelive:10060?param=" + JSON.stringify(IOSRouter);
+        const IOSRouterss = `ihayner://homelive:10060?param=${JSON.stringify(IOSRouter)}`;
         NativeJs.gorouter(JSON.stringify(router), IOSRouterss);
-    };
+    }
     /**
      *
      * @param router跳转直播列表
      */
-    NativeJs.gotoLiveListPage = function () {
+    static gotoLiveListPage() {
         NativeJs.baseGoRouter('ihayner://livelist_activity:10061?', "");
-    };
+    }
     /**
      *
      * @param 跳转banner页
      */
-    NativeJs.gotoBanner = function (bannerdata) {
-        exports.baseNativeJs('banner', { bannerdata: bannerdata });
-    };
+    static gotoBanner(bannerdata) {
+        baseNativeJs('banner', { bannerdata });
+    }
     /**
      * 跳转首页
      */
-    NativeJs.gotoHome = function () {
+    static gotoHome() {
         NativeJs.baseGoRouter('ihayner://homepage:10002?', "");
-    };
+    }
     /**
      * 跳转交易
      */
-    NativeJs.tradeStock = function (stock_name, stock_code, buyorsell) {
-        exports.baseNativeJs('tradeStock', { stock_name: stock_name, stock_code: stock_code, buyorsell: buyorsell });
-    };
+    static tradeStock(stock_name, stock_code, buyorsell) {
+        baseNativeJs('tradeStock', { stock_name, stock_code, buyorsell });
+    }
     /**
-     * 点击放大图片
+     * 跳转策略详情
      */
-    NativeJs.imageClick = function (img_url) {
-        exports.baseNativeJs("imgClick", { img_url: img_url });
-    };
-    /**
-     * 字体缩放
-     */
-    NativeJs.changeBodyFontSize = function (isshow, callback) {
-        window['changeBodyFontSize'] = function (result) {
-            try {
-                result = result;
-            }
-            catch (e) {
-                console.log('出错！');
-            }
-            if (result) {
-                callback(result);
-                // window['userInfo'].access_token=result;
-            }
-        };
-        exports.baseNativeJs("changeBodyFontSize", { isshow: isshow });
-    };
-    /**
-     * 自选股添加和删除
-     * @param stock_method 添加还是删除", （boolean值 默认false 删除）
-     * @param stock_code 股票代码
-     */
-    NativeJs.optional = function (stock_method, stock_code) {
-        exports.baseNativeJs("optional", { stock_method: stock_method, stock_code: stock_code });
-    };
-    return NativeJs;
-}());
-exports.default = NativeJs;
+    static operationboarddetail(strategyId) {
+        NativeJs.baseGoRouter('ihayner://operationboarddetail:10033?', { id: strategyId });
+    }
+}
