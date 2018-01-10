@@ -284,7 +284,7 @@ export default class NativeJs {
      * @param stock_method 添加还是删除", （boolean值 默认false 删除）
      * @param stock_code 股票代码
      */
-    optional(stock_method:boolean,stock_code:string) {
+    static optional(stock_method:boolean,stock_code:string) {
         baseNativeJs("optional",{stock_method,stock_code})
     }
 	
