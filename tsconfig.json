@@ -7,7 +7,7 @@
     "sourceMap": true,
     "noLib": false,
     "noImplicitAny": false,
-    "removeComments": true,
+    "removeComments": false,
     "preserveConstEnums": true,
     "suppressImplicitAnyIndexErrors": true,
     "emitDecoratorMetadata": true,
