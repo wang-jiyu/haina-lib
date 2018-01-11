@@ -87,7 +87,7 @@ export default class Utils {
 
     static setDocumentTitle(title: string) {
         document.title = title
-        if (Utils.isIOS()) {
+        if (Utils.isIOS()&&!Utils.isApp()) {
             const iframe = document.createElement('iframe');
             iframe.style.cssText = 'display: none; width: 0; height: 0;';
             iframe.src = 'https://m2.0606.com.cn/assets/images/logo.png';
