@@ -54,4 +54,40 @@ export default class NumberUtil {
         return autoUnit?{result,unit:unitStr}:result;
     }
 
+    /**
+     *
+     * @param number 需要格式化的数字 默认所有数字是精确到分的
+     * @param places 需要保留的小数位
+     * @param symbol 需要使用的金额标识，￥，$等
+     * @param thousand 千位格式化的分隔符
+     * @param decimal 小数位的分隔符
+     * @param unit 单位，根据number和期望结果决定
+     * @param autoUnit 小数位的分隔符
+     */
+    static formatStockCount(number: number = 0, config?: IFormatMoneyConfig):any {
+        const param = Object.assign({}, {
+            unit: 1,
+            autoUnit: false
+        }, { ...config })
+        let { unit, autoUnit } = param
+        let unitStr = '股'
+        number = number / unit
+        if(autoUnit){
+            if(Math.abs(number)>99999999){
+                number = number / 100000000
+                unitStr = '亿股'
+            }else if(Math.abs(number)>9999){
+                number = number / 10000
+                unitStr = '万股'
+            }
+        }
+        var result = Math.abs(number)
+        return autoUnit?{result,unit:unitStr}:result;
+    }
+
+
+
+
+
+
 }
