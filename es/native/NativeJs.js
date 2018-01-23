@@ -137,14 +137,14 @@ export default class NativeJs {
     static share(sharevalue) {
         let { siteUrl, url, titleUrl, parameter } = sharevalue;
         if (window.location.search && window.location.search !== '') {
-            siteUrl = siteUrl + '&sharefrom=mobile';
-            url = url + '&sharefrom=mobile';
-            titleUrl = titleUrl + '&sharefrom=mobile';
+            siteUrl = siteUrl + '&innerapp=hayner';
+            url = url + '&innerapp=hayner';
+            titleUrl = titleUrl + '&innerapp=hayner';
         }
         else {
-            siteUrl = siteUrl + '?sharefrom=mobile';
-            url = url + '?sharefrom=mobile';
-            titleUrl = titleUrl + '?sharefrom=mobile';
+            siteUrl = siteUrl + '?innerapp=hayner';
+            url = url + '?innerapp=hayner';
+            titleUrl = titleUrl + '?innerapp=hayner';
         }
         sharevalue = Object.assign({}, sharevalue, {
             siteUrl: siteUrl.replace(/access_token=[\s\S]*/, 'access_token='),
