@@ -149,8 +149,26 @@ export default class NativeJs {
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
-		"url": string
+		"url": string,
+		"eventId"?:string,
+		"parameter"?:Object
 	}) {
+		let {siteUrl,url,titleUrl,parameter} = sharevalue
+		if(window.location.search&&window.location.search!==''){
+			siteUrl = siteUrl+'&sharefrom=mobile'
+			url = url+'&sharefrom=mobile'
+			titleUrl = titleUrl+'&sharefrom=mobile'
+		}else{
+			siteUrl = siteUrl+'?sharefrom=mobile'
+			url = url+'?sharefrom=mobile'
+			titleUrl = titleUrl+'?sharefrom=mobile'
+		}
+		sharevalue = Object.assign({},sharevalue,{
+			siteUrl:siteUrl.replace(/access_token=[\s\S]*/, 'access_token='),
+			url:url.replace(/access_token=[\s\S]*/, 'access_token='),
+			titleUrl:titleUrl.replace(/access_token=[\s\S]*/, 'access_token='),
+			parameter:JSON.stringify(parameter)
+		})
 		baseNativeJs('share', { sharevalue })
 	}
 
@@ -288,4 +306,21 @@ export default class NativeJs {
         baseNativeJs("optional",{stock_method,stock_code})
     }
 	
+	/**
+	 * 获取埋点头
+	 */
+	static getRequestHead(callback){
+		window['getRequestHead'] = function (result: any) {
+			delete window['getRequestHead'];
+			try {
+				result = result;
+			} catch (e) {
+				console.log('出错！');
+			}
+			if (result) {
+				callback(result);
+			}
+		}
+		return baseNativeJs("getRequestHead")
+	}
 }

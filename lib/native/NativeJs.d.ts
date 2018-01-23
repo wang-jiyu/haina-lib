@@ -71,6 +71,8 @@ export default class NativeJs {
         "title": string;
         "titleUrl": string;
         "url": string;
+        "eventId"?: string;
+        "parameter"?: Object;
     }): void;
     /**
      *
@@ -138,4 +140,8 @@ export default class NativeJs {
      * @param stock_code 股票代码
      */
     static optional(stock_method: boolean, stock_code: string): void;
+    /**
+     * 获取埋点头
+     */
+    static getRequestHead(callback: any): void;
 }
