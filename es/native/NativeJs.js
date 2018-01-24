@@ -146,10 +146,27 @@ export default class NativeJs {
             url = url + '?innerapp=hayner';
             titleUrl = titleUrl + '?innerapp=hayner';
         }
+        function replacePos(strObj, start, end, replacetext) {
+            var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length);
+            return str;
+        }
+        function relaceUrl(url) {
+            let start = url.indexOf("access_token");
+            let isAccessToken = start > -1;
+            let end = url.indexOf("&", start);
+            let isMore = end > -1;
+            if (isMore && isAccessToken) {
+                return replacePos(url, start, end, "access_token=");
+            }
+            else if (isAccessToken) {
+                return url.replace(/access_token=[\s\S]*/, 'access_token=');
+            }
+            return url;
+        }
         sharevalue = Object.assign({}, sharevalue, {
-            siteUrl: siteUrl.replace(/access_token=[\s\S]*/, 'access_token='),
-            url: url.replace(/access_token=[\s\S]*/, 'access_token='),
-            titleUrl: titleUrl.replace(/access_token=[\s\S]*/, 'access_token='),
+            siteUrl: relaceUrl(siteUrl),
+            url: relaceUrl(url),
+            titleUrl: relaceUrl(titleUrl),
             parameter: JSON.stringify(parameter)
         });
         baseNativeJs('share', { sharevalue });
