@@ -304,4 +304,10 @@ export default class NativeJs {
         };
         return baseNativeJs("getRequestHead");
     }
+    /**
+     * 拨打电话
+     */
+    static callphone(title, phone) {
+        return baseNativeJs("callphone", { title, phone });
+    }
 }

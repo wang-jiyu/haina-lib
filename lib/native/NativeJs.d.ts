@@ -144,4 +144,8 @@ export default class NativeJs {
      * 获取埋点头
      */
     static getRequestHead(callback: any): void;
+    /**
+     * 拨打电话
+     */
+    static callphone(title: string, phone: string): void;
 }
