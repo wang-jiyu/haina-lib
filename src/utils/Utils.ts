@@ -79,10 +79,9 @@ export default class Utils {
     }
 
     static getRealByFontSize(value: number): number {
-        let base = value / 100
+        let baseFontSize = window['baseFontSize_haina']
         let fontSize = Number.parseFloat(document.documentElement.style.fontSize)
-
-        return base * fontSize
+        return value * (fontSize / baseFontSize)
     }
 
     static setDocumentTitle(title: string) {

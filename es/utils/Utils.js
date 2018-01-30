@@ -29,9 +29,9 @@ export default class Utils {
         return Utils.phoneRegex[window.navigator.language.toLowerCase()].test(phone.replace(/\s+/g, ""));
     }
     static getRealByFontSize(value) {
-        let base = value / 100;
+        let baseFontSize = window['baseFontSize_haina'];
         let fontSize = Number.parseFloat(document.documentElement.style.fontSize);
-        return base * fontSize;
+        return value * (fontSize / baseFontSize);
     }
     static setDocumentTitle(title) {
         document.title = title;
