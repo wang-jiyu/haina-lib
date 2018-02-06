@@ -12,13 +12,13 @@ export default class HttpClient {
             }else if(response.data.code === 40010){
                 //java后台
                 NativeJs.refreshtoken_load()
-                return Promise.reject(response)
+                return Promise.reject(response.data)
             }else if(response.data.code === 401){
                 //go后台
                 NativeJs.refreshtoken_load()
-                return Promise.reject(response)
+                return Promise.reject(response.data)
             }else {
-                return Promise.reject(response)
+                return Promise.reject(response.data)
             }
             
         }, function (error) {
