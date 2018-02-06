@@ -8,12 +8,14 @@ export const baseNativeJs = (funcName: string, params?: object, ios?: object) =>
 			}, { ...ios }) : Object.assign({}, {
 				"nativeCallJS": funcName
 			}, { ...params })
+			console.log("nativeparam",realParam)
 			window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
 		} else if (/Android/i.test(window.navigator.userAgent)) {
 			const realParam = Object.assign({}, {
 				"nativecalljs": funcName
 			}, { ...params })				       //android
 			const paramstr = JSON.stringify(realParam)
+			console.log("nativeparam",paramstr)
 			window['haina'].pushEvent(paramstr);
 		}
 	} else {
