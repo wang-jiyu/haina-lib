@@ -59,6 +59,15 @@ export default class Utils {
         script.async = async;
         document.body.appendChild(script);
     }
+    static isWx() {
+        const ua = window.navigator.userAgent.toLowerCase();
+        if (ua.indexOf('micromessenger') < 0) {
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
 }
 Utils.phoneRegex = {
     'ar-dz': /^(\+?213|0)(5|6|7)\d{8}$/,

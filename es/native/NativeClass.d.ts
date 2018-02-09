@@ -1,29 +1,29 @@
 export declare const baseNativeJs: (funcName: string, params?: object, ios?: object) => void;
-export default class NativeJs {
-    static baseWindow(funcName: string): void;
+export default class NativeClass {
+    baseWindow(funcName: string): void;
     /**
      * 登陆
      * 返回token
      * @param callback
      */
-    static login(callback: Function): any;
+    login(callback: Function): any;
     /**
      * 刷新token
      */
-    static refreshtoken_load(): any;
+    refreshtoken_load(): any;
     /**
      * 跳转支付
      * @param ref_id  产品id
      * @param ref_type 产品类型
      * @param buyCycle 限制体验支付，或者自实现支付列表的时候，需要传此参数
      */
-    static toPay(ref_id: any, ref_type: any, buyCycle?: object): any;
+    toPay(ref_id: any, ref_type: any, buyCycle?: object): any;
     /**
      * 应用内部跳转
      * @param router
      */
-    static gorouter(router: string, iosRouter: string): any;
-    static baseShare(name: any, sharevalue: {
+    gorouter(router: string, iosRouter: string): any;
+    baseShare(name: any, sharevalue: {
         "desc": string;
         "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
         "shareType": 'all';
@@ -47,7 +47,7 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareWeiXin(sharevalue: {
+    shareWeiXin(sharevalue: {
         "desc": string;
         "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
         "shareType": 'all';
@@ -71,7 +71,7 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareFriends(sharevalue: {
+    shareFriends(sharevalue: {
         "desc": string;
         "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
         "shareType": 'all';
@@ -95,7 +95,7 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static share(sharevalue: {
+    share(sharevalue: {
         "desc": string;
         "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
         "shareType": 'all';
@@ -112,33 +112,33 @@ export default class NativeJs {
      * @param product_id 适当性检测
      * @param risk_score
      */
-    static ihanerFSP(product_id: string, risk_score: string): void;
+    ihanerFSP(product_id: string, risk_score: string): void;
     /**
      *
      * @param 跳转
      */
-    static baseGoRouter(host: string, param: string | object): void;
+    baseGoRouter(host: string, param: string | object): void;
     /**
      *
      * @param stocknSid 股票id
      */
-    static gotoStockDetailPage(stocknSid: string): void;
+    gotoStockDetailPage(stocknSid: string): void;
     /**
      *
      * @param router跳转战队直播室
      * ihayner://homelive:10060?param={"data":"{\"liveRoomType\":0,\"roomId\":\"71314e37e7c790c95af57bcb\",\"serviceId\":\"558a3e9025ea5de341f5203d\",\"type\":0}","defaultParam":"2"}
      */
-    static gotoLiveDetailPage(liveType: string, roomId: string, serviceId: string): void;
+    gotoLiveDetailPage(liveType: string, roomId: string, serviceId: string): void;
     /**
      *
      * @param router跳转直播列表
      */
-    static gotoLiveListPage(): void;
+    gotoLiveListPage(): void;
     /**
      *
      * @param 跳转banner页
      */
-    static gotoBanner(bannerdata: {
+    gotoBanner(bannerdata: {
         _id;
         create_time;
         image_url;
@@ -154,31 +154,31 @@ export default class NativeJs {
     /**
      * 跳转首页
      */
-    static gotoHome(): void;
+    gotoHome(): void;
     /**
      * 跳转交易
      */
-    static tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell'): void;
+    tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell'): void;
     /**
      * 点击放大图片
      */
-    static imageClick(img_url: any): void;
+    imageClick(img_url: any): void;
     /**
      * 字体缩放
      */
-    static changeBodyFontSize(isshow: any, callback: any): void;
+    changeBodyFontSize(isshow: any, callback: any): void;
     /**
      * 自选股添加和删除
      * @param stock_method 添加还是删除", （boolean值 默认false 删除）
      * @param stock_code 股票代码
      */
-    static optional(stock_method: boolean, stock_code: string): void;
+    optional(stock_method: boolean, stock_code: string): void;
     /**
      * 获取埋点头
      */
-    static getRequestHead(callback: any): void;
+    getRequestHead(callback: any): void;
     /**
      * 拨打电话
      */
-    static callphone(title: string, phone: string): void;
+    callphone(title: string, phone: string): void;
 }

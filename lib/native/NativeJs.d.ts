@@ -1,5 +1,4 @@
 export declare const baseNativeJs: (funcName: string, params?: object, ios?: object) => void;
-import { IShareValue } from './NativeInterface';
 export default class NativeJs {
     static baseWindow(funcName: string): void;
     /**
@@ -24,6 +23,18 @@ export default class NativeJs {
      * @param router
      */
     static gorouter(router: string, iosRouter: string): any;
+    static baseShare(name: any, sharevalue: {
+        "desc": string;
+        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
+        "shareType": 'all';
+        "site": '海纳智投';
+        "siteUrl": string;
+        "title": string;
+        "titleUrl": string;
+        "url": string;
+        "eventId"?: string;
+        "parameter"?: Object;
+    }): void;
     /**
      * 分享到微信
      * @param shareValue
@@ -36,7 +47,18 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareWeiXin(sharevalue: IShareValue): void;
+    static shareWeiXin(sharevalue: {
+        "desc": string;
+        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
+        "shareType": 'all';
+        "site": '海纳智投';
+        "siteUrl": string;
+        "title": string;
+        "titleUrl": string;
+        "url": string;
+        "eventId"?: string;
+        "parameter"?: Object;
+    }): void;
     /**
      * 分享到朋友圈
      * @param shareFriends
@@ -49,7 +71,18 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareFriends(sharevalue: IShareValue): void;
+    static shareFriends(sharevalue: {
+        "desc": string;
+        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
+        "shareType": 'all';
+        "site": '海纳智投';
+        "siteUrl": string;
+        "title": string;
+        "titleUrl": string;
+        "url": string;
+        "eventId"?: string;
+        "parameter"?: Object;
+    }): void;
     /**
      * 调用移动端的分享
      * @param shareFriends

@@ -38,8 +38,8 @@ export const baseNativeJs = (funcName, params, ios) => {
         }
     }
 };
-export default class NativeJs {
-    static baseWindow(funcName) {
+export default class NativeClass {
+    baseWindow(funcName) {
         window[funcName] = function () {
             delete window[funcName];
         };
@@ -49,7 +49,7 @@ export default class NativeJs {
      * 返回token
      * @param callback
      */
-    static login(callback) {
+    login(callback) {
         window['refreshtoken'] = function (result) {
             delete window['refreshtoken'];
             try {
@@ -68,7 +68,7 @@ export default class NativeJs {
     /**
      * 刷新token
      */
-    static refreshtoken_load() {
+    refreshtoken_load() {
         return baseNativeJs("refreshtoken_reload");
     }
     /**
@@ -77,7 +77,7 @@ export default class NativeJs {
      * @param ref_type 产品类型
      * @param buyCycle 限制体验支付，或者自实现支付列表的时候，需要传此参数
      */
-    static toPay(ref_id, ref_type, buyCycle) {
+    toPay(ref_id, ref_type, buyCycle) {
         // window['topay'] = function () {
         // 	delete window['topay'];
         // 	try {
@@ -92,28 +92,11 @@ export default class NativeJs {
      * 应用内部跳转
      * @param router
      */
-    static gorouter(router, iosRouter) {
+    gorouter(router, iosRouter) {
         return baseNativeJs('gorouter', { router }, { router: iosRouter });
     }
-    static baseShare(name, sharevalue) {
+    baseShare(name, sharevalue) {
         let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc } = sharevalue;
-        function replacePos(strObj, start, end, replacetext) {
-            var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length);
-            return str;
-        }
-        function relaceUrl(url) {
-            let start = url.indexOf("access_token");
-            let isAccessToken = start > -1;
-            let end = url.indexOf("&", start);
-            let isMore = end > -1;
-            if (isMore && isAccessToken) {
-                return replacePos(url, start, end, "access_token=");
-            }
-            else if (isAccessToken) {
-                return url.replace(/access_token=[\s\S]*/, 'access_token=');
-            }
-            return url;
-        }
         if (Utils.isApp()) {
             if (window.location.search && window.location.search !== '') {
                 siteUrl = siteUrl + '&innerapp=hayner';
@@ -124,6 +107,23 @@ export default class NativeJs {
                 siteUrl = siteUrl + '?innerapp=hayner';
                 url = url + '?innerapp=hayner';
                 titleUrl = titleUrl + '?innerapp=hayner';
+            }
+            function replacePos(strObj, start, end, replacetext) {
+                var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length);
+                return str;
+            }
+            function relaceUrl(url) {
+                let start = url.indexOf("access_token");
+                let isAccessToken = start > -1;
+                let end = url.indexOf("&", start);
+                let isMore = end > -1;
+                if (isMore && isAccessToken) {
+                    return replacePos(url, start, end, "access_token=");
+                }
+                else if (isAccessToken) {
+                    return url.replace(/access_token=[\s\S]*/, 'access_token=');
+                }
+                return url;
             }
             sharevalue = Object.assign({}, sharevalue, {
                 siteUrl: relaceUrl(siteUrl),
@@ -137,7 +137,7 @@ export default class NativeJs {
             Utils.loadOutJS("https://res.wx.qq.com/open/js/jweixin-1.2.0.js");
             try {
                 const mywx = new WXClass();
-                mywx.init(encodeURIComponent(location.href.split('#')[0])).then(() => {
+                mywx.init(window.location.href).then(() => {
                     mywx.wxshare({
                         title,
                         desc,
@@ -163,8 +163,8 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareWeiXin(sharevalue) {
-        NativeJs.baseShare('shareWeiXin', sharevalue);
+    shareWeiXin(sharevalue) {
+        this.baseShare('shareWeiXin', sharevalue);
     }
     /**
      * 分享到朋友圈
@@ -178,8 +178,8 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareFriends(sharevalue) {
-        NativeJs.baseShare('shareFriends', sharevalue);
+    shareFriends(sharevalue) {
+        this.baseShare('shareFriends', sharevalue);
     }
     /**
      * 调用移动端的分享
@@ -193,22 +193,22 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static share(sharevalue) {
-        NativeJs.baseShare('share', sharevalue);
+    share(sharevalue) {
+        this.baseShare('share', sharevalue);
     }
     /**
      *
      * @param product_id 适当性检测
      * @param risk_score
      */
-    static ihanerFSP(product_id, risk_score) {
+    ihanerFSP(product_id, risk_score) {
         baseNativeJs('ihanerFSP', { product_id, risk_score });
     }
     /**
      *
      * @param 跳转
      */
-    static baseGoRouter(host, param) {
+    baseGoRouter(host, param) {
         const router = {
             host: host,
             param: typeof param === 'string' ? param : Object.keys(param).map((key) => `${key}=${param[key]}`).join("&")
@@ -217,21 +217,21 @@ export default class NativeJs {
             data: param
         };
         const IOSRouterss = `${host}param=${JSON.stringify(IOSRouter)}`;
-        NativeJs.gorouter(JSON.stringify(router), IOSRouterss);
+        this.gorouter(JSON.stringify(router), IOSRouterss);
     }
     /**
      *
      * @param stocknSid 股票id
      */
-    static gotoStockDetailPage(stocknSid) {
-        NativeJs.baseGoRouter('ihayner://stockdetail:11001?', stocknSid);
+    gotoStockDetailPage(stocknSid) {
+        this.baseGoRouter('ihayner://stockdetail:11001?', stocknSid);
     }
     /**
      *
      * @param router跳转战队直播室
      * ihayner://homelive:10060?param={"data":"{\"liveRoomType\":0,\"roomId\":\"71314e37e7c790c95af57bcb\",\"serviceId\":\"558a3e9025ea5de341f5203d\",\"type\":0}","defaultParam":"2"}
      */
-    static gotoLiveDetailPage(liveType, roomId, serviceId) {
+    gotoLiveDetailPage(liveType, roomId, serviceId) {
         const router = {
             host: `ihayner://homelive:10060?`,
             param: {
@@ -251,44 +251,44 @@ export default class NativeJs {
             defaultParam: "2"
         };
         const IOSRouterss = `ihayner://homelive:10060?param=${JSON.stringify(IOSRouter)}`;
-        NativeJs.gorouter(JSON.stringify(router), IOSRouterss);
+        this.gorouter(JSON.stringify(router), IOSRouterss);
     }
     /**
      *
      * @param router跳转直播列表
      */
-    static gotoLiveListPage() {
-        NativeJs.baseGoRouter('ihayner://livelist_activity:10061?', "");
+    gotoLiveListPage() {
+        this.baseGoRouter('ihayner://livelist_activity:10061?', "");
     }
     /**
      *
      * @param 跳转banner页
      */
-    static gotoBanner(bannerdata) {
+    gotoBanner(bannerdata) {
         baseNativeJs('banner', { bannerdata });
     }
     /**
      * 跳转首页
      */
-    static gotoHome() {
-        NativeJs.baseGoRouter('ihayner://homepage:10002?', "");
+    gotoHome() {
+        this.baseGoRouter('ihayner://homepage:10002?', "");
     }
     /**
      * 跳转交易
      */
-    static tradeStock(stock_name, stock_code, buyorsell) {
+    tradeStock(stock_name, stock_code, buyorsell) {
         baseNativeJs('tradeStock', { stock_name, stock_code, buyorsell });
     }
     /**
      * 点击放大图片
      */
-    static imageClick(img_url) {
+    imageClick(img_url) {
         baseNativeJs("imgClick", { img_url });
     }
     /**
      * 字体缩放
      */
-    static changeBodyFontSize(isshow, callback) {
+    changeBodyFontSize(isshow, callback) {
         window['changeBodyFontSize'] = function (result) {
             try {
                 result = result;
@@ -308,13 +308,13 @@ export default class NativeJs {
      * @param stock_method 添加还是删除", （boolean值 默认false 删除）
      * @param stock_code 股票代码
      */
-    static optional(stock_method, stock_code) {
+    optional(stock_method, stock_code) {
         baseNativeJs("optional", { stock_method, stock_code });
     }
     /**
      * 获取埋点头
      */
-    static getRequestHead(callback) {
+    getRequestHead(callback) {
         window['getRequestHead'] = function (result) {
             delete window['getRequestHead'];
             try {
@@ -332,7 +332,7 @@ export default class NativeJs {
     /**
      * 拨打电话
      */
-    static callphone(title, phone) {
+    callphone(title, phone) {
         return baseNativeJs("callphone", { title, phone });
     }
 }

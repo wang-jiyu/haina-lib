@@ -45,4 +45,5 @@ export default class Utils {
     static getRealByFontSize(value: number): number;
     static setDocumentTitle(title: string): void;
     static loadOutJS(jsurl: string, async?: boolean): void;
+    static isWx(): boolean;
 }

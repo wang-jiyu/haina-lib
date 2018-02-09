@@ -112,4 +112,13 @@ export default class Utils {
         document.body.appendChild(script)
     }
 
+    static isWx(){
+        const ua = window.navigator.userAgent.toLowerCase()
+        if (ua.indexOf('micromessenger') < 0) {
+            return false
+        }else {
+            return true
+        }
+    }
+
 }
