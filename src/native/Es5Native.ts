@@ -1,35 +1,7 @@
-if (typeof Object.assign != 'function') {
-	// Must be writable: true, enumerable: false, configurable: true
-	Object.defineProperty(Object, "assign", {
-		value: function assign(target, varArgs) { // .length of function is 2
-			'use strict';
-			if (target == null) { // TypeError if undefined or null
-				throw new TypeError('Cannot convert undefined or null to object');
-			}
-
-			var to = Object(target);
-
-			for (var index = 1; index < arguments.length; index++) {
-				var nextSource = arguments[index];
-
-				if (nextSource != null) { // Skip over if undefined or null
-					for (var nextKey in nextSource) {
-						// Avoid bugs when hasOwnProperty is shadowed
-						if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
-							to[nextKey] = nextSource[nextKey];
-						}
-					}
-				}
-			}
-			return to;
-		},
-		writable: true,
-		configurable: true
-	});
-}
 
 import Utils from '../utils/Utils'
-const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
+import WXClass from '../wx/WXClass'
+export const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
 	if (Utils.isApp()) {
 		if (typeof window['webkit'] != 'undefined') {
 			const realParam = ios ? Object.assign({}, {
@@ -37,12 +9,14 @@ const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
 			}, { ...ios }) : Object.assign({}, {
 				"nativeCallJS": funcName
 			}, { ...params })
+			console.log("nativeparam", realParam)
 			window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
 		} else if (/Android/i.test(window.navigator.userAgent)) {
 			const realParam = Object.assign({}, {
 				"nativecalljs": funcName
 			}, { ...params })				       //android
 			const paramstr = JSON.stringify(realParam)
+			console.log("nativeparam", paramstr)
 			window['haina'].pushEvent(paramstr);
 		}
 	} else {
@@ -64,8 +38,7 @@ const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
 	}
 
 }
-import { IShareValue } from './NativeInterface'
-class NativeJs {
+export default class NativeJs {
 	static baseWindow(funcName: string) {
 		window[funcName] = function () {
 			delete window[funcName];
@@ -126,6 +99,69 @@ class NativeJs {
 		return baseNativeJs('gorouter', { router }, { router: iosRouter })
 	}
 
+	static baseShare(name, sharevalue: {
+		"desc": string,
+		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
+		"shareType": 'all',
+		"site": '海纳智投',
+		"siteUrl": string,
+		"title": string,
+		"titleUrl": string,
+		"url": string,
+		"eventId"?: string,
+		"parameter"?: Object
+	}) {
+		let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc } = sharevalue
+		function replacePos(strObj, start, end, replacetext) {
+			var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length);
+			return str;
+		}
+		function relaceUrl(url) {
+			let start = url.indexOf("access_token")
+			let isAccessToken = start > -1
+			let end = url.indexOf("&", start)
+			let isMore = end > -1
+			if (isMore && isAccessToken) {
+				return replacePos(url, start, end, "access_token=")
+			} else if (isAccessToken) {
+				return url.replace(/access_token=[\s\S]*/, 'access_token=')
+			}
+			return url
+		}
+		if (Utils.isApp()) {
+			if (window.location.search && window.location.search !== '') {
+				siteUrl = siteUrl + '&innerapp=hayner'
+				url = url + '&innerapp=hayner'
+				titleUrl = titleUrl + '&innerapp=hayner'
+			} else {
+				siteUrl = siteUrl + '?innerapp=hayner'
+				url = url + '?innerapp=hayner'
+				titleUrl = titleUrl + '?innerapp=hayner'
+			}
+			
+			sharevalue = Object.assign({}, sharevalue, {
+				siteUrl: relaceUrl(siteUrl),
+				url: relaceUrl(url),
+				titleUrl: relaceUrl(titleUrl),
+				parameter: JSON.stringify(parameter)
+			})
+			baseNativeJs(name, { sharevalue })
+		} else if (Utils.isWx()) {
+			try {
+				const mywx = new WXClass()
+				mywx.init(encodeURIComponent(location.href.split('#')[0])).then(() => {
+					mywx.wxshare({
+						title,
+						desc,
+						link: url,
+						imgUrl: imageUrl
+					})
+				})
+			} catch (error) {
+				console.error("微信分享出错")
+			}
+		}
+	}
 	/**
 	 * 分享到微信
 	 * @param shareValue 
@@ -138,8 +174,19 @@ class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static shareWeiXin(sharevalue: IShareValue) {
-		baseNativeJs('shareWeiXin', { sharevalue })
+	static shareWeiXin(sharevalue: {
+		"desc": string,
+		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
+		"shareType": 'all',
+		"site": '海纳智投',
+		"siteUrl": string,
+		"title": string,
+		"titleUrl": string,
+		"url": string,
+		"eventId"?: string,
+		"parameter"?: Object
+	}) {
+		NativeJs.baseShare('shareWeiXin', sharevalue)
 	}
 
 	/**
@@ -154,8 +201,19 @@ class NativeJs {
 	 * @param titleUrl 标题的url
 	 * @param url 本身的链接
 	 */
-	static shareFriends(sharevalue: IShareValue) {
-		baseNativeJs('shareFriends', { sharevalue })
+	static shareFriends(sharevalue: {
+		"desc": string,
+		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
+		"shareType": 'all',
+		"site": '海纳智投',
+		"siteUrl": string,
+		"title": string,
+		"titleUrl": string,
+		"url": string,
+		"eventId"?: string,
+		"parameter"?: Object
+	}) {
+		NativeJs.baseShare('shareFriends', sharevalue)
 	}
 
 	/**
@@ -178,9 +236,11 @@ class NativeJs {
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
-		"url": string
+		"url": string,
+		"eventId"?: string,
+		"parameter"?: Object
 	}) {
-		baseNativeJs('share', { sharevalue })
+		NativeJs.baseShare('share', sharevalue)
 	}
 
 
@@ -258,33 +318,88 @@ class NativeJs {
 		NativeJs.baseGoRouter('ihayner://livelist_activity:10061?', "")
 	}
 
-	
+
 	/**
 	 * 
 	 * @param 跳转banner页 
 	 */
-	static gotoBanner(bannerdata:{_id,create_time,image_url,device_image_url,intro,link_url,order,target,title,link_type,ref_type}) {
-		baseNativeJs('banner',{bannerdata})
+	static gotoBanner(bannerdata: { _id, create_time, image_url, device_image_url, intro, link_url, order, target, title, link_type, ref_type }) {
+		baseNativeJs('banner', { bannerdata })
 	}
 
 	/**
 	 * 跳转首页
 	 */
-	static gotoHome(){
-		NativeJs.baseGoRouter('ihayner://homepage:10002?',"")
+	static gotoHome() {
+		NativeJs.baseGoRouter('ihayner://homepage:10002?', "")
 	}
 
 	/**
 	 * 跳转交易
 	 */
-	static tradeStock(stock_name:string,stock_code:string,buyorsell:'buy'|'sell'){
-		baseNativeJs('tradeStock',{stock_name,stock_code,buyorsell})
+	static tradeStock(stock_name: string, stock_code: string, buyorsell: 'buy' | 'sell') {
+		baseNativeJs('tradeStock', { stock_name, stock_code, buyorsell })
 	}
 
 	/**
-	 * 跳转策略详情
+	 * 点击放大图片
 	 */
-	static operationboarddetail(strategyId){
-		NativeJs.baseGoRouter('ihayner://operationboarddetail:10033?',{id:strategyId})
+	static imageClick(img_url) {
+
+		baseNativeJs("imgClick", { img_url })
+	}
+
+	/**
+	 * 字体缩放
+	 */
+	static changeBodyFontSize(isshow, callback) {
+		window['changeBodyFontSize'] = function (result: any) {
+			try {
+				result = result;
+			} catch (e) {
+				console.log('出错！');
+			}
+			if (result) {
+				callback(result);
+				// window['userInfo'].access_token=result;
+			}
+		}
+		baseNativeJs("changeBodyFontSize", { isshow })
+	}
+
+
+    /**
+     * 自选股添加和删除
+     * @param stock_method 添加还是删除", （boolean值 默认false 删除）
+     * @param stock_code 股票代码
+     */
+	static optional(stock_method: boolean, stock_code: string) {
+		baseNativeJs("optional", { stock_method, stock_code })
+	}
+
+	/**
+	 * 获取埋点头
+	 */
+	static getRequestHead(callback) {
+		window['getRequestHead'] = function (result: any) {
+			delete window['getRequestHead'];
+			try {
+				result = result;
+			} catch (e) {
+				console.log('出错！');
+			}
+			if (result) {
+				callback(result);
+			}
+		}
+		return baseNativeJs("getRequestHead")
+	}
+
+	/**
+	 * 拨打电话
+	 */
+	static callphone(title: string, phone: string) {
+
+		return baseNativeJs("callphone", { title, phone })
 	}
 }
