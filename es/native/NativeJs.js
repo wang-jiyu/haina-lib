@@ -134,7 +134,6 @@ export default class NativeJs {
             baseNativeJs(name, { sharevalue });
         }
         else if (Utils.isWx()) {
-            Utils.loadOutJS("https://res.wx.qq.com/open/js/jweixin-1.2.0.js");
             try {
                 const mywx = new WXClass();
                 mywx.init(encodeURIComponent(location.href.split('#')[0])).then(() => {
