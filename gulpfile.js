@@ -7,6 +7,7 @@ const uglify = require('gulp-uglify');
 const browserify = require("browserify")
 const buffer = require("vinyl-buffer")
 const source = require("vinyl-source-stream")
+const concat = require("gulp-concat");
 //class模式
 gulp.task('es', function () {
     tsProj.options.target = 2;
@@ -31,18 +32,20 @@ gulp.task("active", function () {
     })
     .transform("babelify", { presets: ["es2015"] })
     .bundle()
-    .pipe(source('haina.bound.js'))
+    .pipe(source('haina.util.js'))
     .pipe(buffer()) // 缓存文件内容
-    .pipe(gulp.dest('dist/v1.0.0'))
+    
+    .pipe(gulp.dest('dist'))
 })
 
-gulp.task("ug",function(){
-    return gulp.src("dist/v1.0.0/haina.bound.js")
+gulp.task("concat",function(){
+    return gulp.src(['dist/weixin.js','dist/haina.util.js'])
+    .pipe(concat('haina.bound.js'))
     .pipe(uglify({
         compress:{
             drop_console:true
         }
     }))
-    .pipe(gulp.dest('dist/v1.0.0'))
+    .pipe(gulp.dest('dist/v1.0.1'))
 })
 
