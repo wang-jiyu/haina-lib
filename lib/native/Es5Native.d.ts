@@ -181,4 +181,7 @@ export default class NativeJs {
      * 拨打电话
      */
     static callphone(title: string, phone: string): void;
+    static goBack(): void;
+    static statusBarStyle(style: any): void;
+    static gotoapp(): void;
 }

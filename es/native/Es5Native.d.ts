@@ -25,9 +25,9 @@ export default class NativeJs {
     static gorouter(router: string, iosRouter: string): any;
     static baseShare(name: any, sharevalue: {
         "desc": string;
-        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
-        "shareType": 'all';
-        "site": '海纳智投';
+        "imageUrl": string;
+        "shareType": string;
+        "site": string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -49,9 +49,9 @@ export default class NativeJs {
      */
     static shareWeiXin(sharevalue: {
         "desc": string;
-        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
-        "shareType": 'all';
-        "site": '海纳智投';
+        "imageUrl": string;
+        "shareType": string;
+        "site": string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -73,9 +73,9 @@ export default class NativeJs {
      */
     static shareFriends(sharevalue: {
         "desc": string;
-        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
-        "shareType": 'all';
-        "site": '海纳智投';
+        "imageUrl": string;
+        "shareType": string;
+        "site": string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -97,9 +97,9 @@ export default class NativeJs {
      */
     static share(sharevalue: {
         "desc": string;
-        "imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png';
-        "shareType": 'all';
-        "site": '海纳智投';
+        "imageUrl": string;
+        "shareType": string;
+        "site": string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -181,4 +181,7 @@ export default class NativeJs {
      * 拨打电话
      */
     static callphone(title: string, phone: string): void;
+    static goBack(): void;
+    static statusBarStyle(style: any): void;
+    static gotoapp(): void;
 }

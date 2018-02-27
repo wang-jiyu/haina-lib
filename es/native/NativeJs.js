@@ -340,4 +340,19 @@ export default class NativeJs {
     static callphone(title, phone) {
         return baseNativeJs("callphone", { title, phone });
     }
+    //返回上一级
+    static goBack() {
+        return baseNativeJs("backtofinish");
+    }
+    //ios改变状态栏颜色
+    static statusBarStyle(style) {
+        if (Utils.isIOS()) {
+            return baseNativeJs("statusBarStyle", { style });
+        }
+    }
+    static gotoapp() {
+        if (!Utils.isApp()) {
+            window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.sz.nniu';
+        }
+    }
 }

@@ -96,7 +96,10 @@ export default class NativeJs {
         return baseNativeJs('gorouter', { router }, { router: iosRouter });
     }
     static baseShare(name, sharevalue) {
-        let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc } = sharevalue;
+        let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc, shareType, site } = sharevalue;
+        imageUrl = imageUrl || "https://m2.0606.com.cn/assets/images/logo.png";
+        shareType = shareType || "all";
+        site = site || "海纳智投";
         function replacePos(strObj, start, end, replacetext) {
             var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length);
             return str;
@@ -129,7 +132,10 @@ export default class NativeJs {
                 siteUrl: relaceUrl(siteUrl),
                 url: relaceUrl(url),
                 titleUrl: relaceUrl(titleUrl),
-                parameter: JSON.stringify(parameter)
+                parameter: JSON.stringify(parameter),
+                imageUrl,
+                shareType,
+                site
             });
             baseNativeJs(name, { sharevalue });
         }
@@ -333,5 +339,20 @@ export default class NativeJs {
      */
     static callphone(title, phone) {
         return baseNativeJs("callphone", { title, phone });
+    }
+    //返回上一级
+    static goBack() {
+        return baseNativeJs("backtofinish");
+    }
+    //ios改变状态栏颜色
+    static statusBarStyle(style) {
+        if (Utils.isIOS()) {
+            return baseNativeJs("statusBarStyle", { style });
+        }
+    }
+    static gotoapp() {
+        if (!Utils.isApp()) {
+            window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.sz.nniu';
+        }
     }
 }
