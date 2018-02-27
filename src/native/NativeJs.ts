@@ -101,9 +101,9 @@ export default class NativeJs {
 
 	static baseShare(name, sharevalue: {
 		"desc": string,
-		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
-		"shareType": 'all',
-		"site": '海纳智投',
+		"imageUrl": string,
+		"shareType": string,
+		"site": string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -111,7 +111,10 @@ export default class NativeJs {
 		"eventId"?: string,
 		"parameter"?: Object
 	}) {
-		let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc } = sharevalue
+		let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc,shareType,site } = sharevalue
+		imageUrl = imageUrl||"https://m2.0606.com.cn/assets/images/logo.png"
+		shareType = shareType||"all"
+		site=site||"海纳智投"
 		function replacePos(strObj, start, end, replacetext) {
 			var str = strObj.substr(0, start) + replacetext + strObj.substring(end, strObj.length);
 			return str;
@@ -143,7 +146,10 @@ export default class NativeJs {
 				siteUrl: relaceUrl(siteUrl),
 				url: relaceUrl(url),
 				titleUrl: relaceUrl(titleUrl),
-				parameter: JSON.stringify(parameter)
+				parameter: JSON.stringify(parameter),
+				imageUrl,
+				shareType,
+				site
 			})
 			baseNativeJs(name, { sharevalue })
 		} else if (Utils.isWx()) {
@@ -176,9 +182,9 @@ export default class NativeJs {
 	 */
 	static shareWeiXin(sharevalue: {
 		"desc": string,
-		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
-		"shareType": 'all',
-		"site": '海纳智投',
+		"imageUrl": string,
+		"shareType": string,
+		"site": string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -203,9 +209,9 @@ export default class NativeJs {
 	 */
 	static shareFriends(sharevalue: {
 		"desc": string,
-		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
-		"shareType": 'all',
-		"site": '海纳智投',
+		"imageUrl": string,
+		"shareType": string,
+		"site": string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -230,9 +236,9 @@ export default class NativeJs {
 	 */
 	static share(sharevalue: {
 		"desc": string,
-		"imageUrl": 'https://m2.0606.com.cn/assets/images/logo.png',
-		"shareType": 'all',
-		"site": '海纳智投',
+		"imageUrl": string,
+		"shareType": string,
+		"site": string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
