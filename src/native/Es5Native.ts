@@ -166,6 +166,20 @@ export default class NativeJs {
 			} catch (error) {
 				console.error("微信分享出错")
 			}
+		}else if(Utils.isQQ()){
+			try {
+				window["setShareInfo"]({
+					title,
+					summary:desc, // 分享内容
+					pic:imageUrl, // 分享图片
+					url:url, // 分享链接
+					callback:function(){
+						console.log("QQ分享成功")
+					}
+				});
+			} catch (error) {
+				console.error("QQ分享出错")
+			}
 		}
 	}
 	/**
