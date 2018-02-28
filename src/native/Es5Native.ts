@@ -172,10 +172,7 @@ export default class NativeJs {
 					title,
 					summary:desc, // 分享内容
 					pic:imageUrl, // 分享图片
-					url:url, // 分享链接
-					callback:function(){
-						console.log("QQ分享成功")
-					}
+					url:url // 分享链接
 				});
 			} catch (error) {
 				console.error("QQ分享出错")

@@ -39,7 +39,7 @@ gulp.task("active", function () {
 })
 
 gulp.task("concat",function(){
-    return gulp.src(['dist/weixin.js','dist/haina.util.js'])
+    return gulp.src(['dist/weixin.js','dist/qq.js','dist/haina.util.js'])
     .pipe(concat('haina.bound.js'))
     .pipe(uglify({
         compress:{
