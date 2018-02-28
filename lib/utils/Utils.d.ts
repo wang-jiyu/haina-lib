@@ -46,4 +46,5 @@ export default class Utils {
     static setDocumentTitle(title: string): void;
     static loadOutJS(jsurl: string, async?: boolean): void;
     static isWx(): boolean;
+    static isQQ(): boolean;
 }

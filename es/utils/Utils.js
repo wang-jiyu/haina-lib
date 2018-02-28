@@ -68,6 +68,13 @@ export default class Utils {
             return true;
         }
     }
+    static isQQ() {
+        const ua = window.navigator.userAgent.toLowerCase();
+        if (ua.match(/QQ/ig)) {
+            return true;
+        }
+        return false;
+    }
 }
 Utils.phoneRegex = {
     'ar-dz': /^(\+?213|0)(5|6|7)\d{8}$/,

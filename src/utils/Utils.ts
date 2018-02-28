@@ -121,4 +121,12 @@ export default class Utils {
         }
     }
 
+    static isQQ(){
+        const ua = window.navigator.userAgent.toLowerCase()
+        if(ua.match(/QQ/ig)){
+            return true
+        }
+        return false
+    }
+
 }
