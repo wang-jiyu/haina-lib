@@ -439,7 +439,7 @@ export default class NativeJs {
 	}
 
 	static cangoback(goback){
-		baseNativeJs("cangoback",{goback})
+		baseNativeJs("cangoback",{ })
 	}
 }
 
