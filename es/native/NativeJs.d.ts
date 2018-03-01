@@ -184,4 +184,5 @@ export default class NativeJs {
     static goBack(): void;
     static statusBarStyle(style: any): void;
     static gotoapp(): void;
+    static cangoback(goback: any): void;
 }

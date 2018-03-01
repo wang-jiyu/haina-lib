@@ -368,4 +368,8 @@ export default class NativeJs {
             window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.sz.nniu';
         }
     }
+    static cangoback(goback) {
+        baseNativeJs("cangoback", { goback });
+    }
 }
+window["NativeJs"] = NativeJs;
