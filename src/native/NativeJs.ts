@@ -438,3 +438,5 @@ export default class NativeJs {
 		}
 	}
 }
+
+window["NativeJs"] = NativeJs

@@ -27,7 +27,7 @@ gulp.task('lib', function () {
 
 gulp.task("active", function () {
     return browserify({
-        entries: ['lib/native/Es5Native.js'],
+        entries: ['lib/native/NativeJs.js'],
         debug: false, // 告知Browserify在运行同时生成内联sourcemap用于调试
     })
     .transform("babelify", { presets: ["es2015"] })
