@@ -371,5 +371,56 @@ export default class NativeJs {
     static cangoback(goback) {
         baseNativeJs("cangoback", {});
     }
+    /**
+     * 控制改变toolbar颜色与标题
+     * @param title
+     * @param color
+     */
+    static toolbar(title, color) {
+        baseNativeJs("toolbar", { title, color });
+    }
+    /**
+     * 通知原生请求失败
+     */
+    static requestfailed() {
+        baseNativeJs("requestfailed");
+    }
+    /**
+     *
+     * @param user_id 开户
+     * @param url
+     */
+    static opAccount(user_id, url) {
+        baseNativeJs("opAccount", { user_id, url });
+    }
+    /**
+     *
+     * @param user_id 交易
+     * @param company_id
+     */
+    static trade(user_id, company_id) {
+        baseNativeJs("trade", { user_id, company_id });
+    }
+    static bindAccount(user_id, company_id) {
+        baseNativeJs("bindAccount", { user_id, company_id });
+    }
+    /**
+     * 调起支付sdk
+     */
+    static startPay(order_id, prepay, paymethod) {
+        baseNativeJs("startPay", { order_id, prepay, paymethod });
+    }
+    /**
+     * 直接调起适当性认证
+     */
+    static startFsp(productId, riskScore) {
+        baseNativeJs("startFsp", { productId, riskScore });
+    }
+    /**
+     * 线下支付提示
+     */
+    static offlineAlert() {
+        baseNativeJs("offlineAlert");
+    }
 }
 window["NativeJs"] = NativeJs;

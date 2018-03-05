@@ -101,9 +101,9 @@ export default class NativeJs {
 
 	static baseShare(name, sharevalue: {
 		"desc": string,
-		"imageUrl": string,
-		"shareType": string,
-		"site": string,
+		"imageUrl"?: string,
+		"shareType"?: string,
+		"site"?: string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -193,9 +193,9 @@ export default class NativeJs {
 	 */
 	static shareWeiXin(sharevalue: {
 		"desc": string,
-		"imageUrl": string,
-		"shareType": string,
-		"site": string,
+		"imageUrl"?: string,
+		"shareType"?: string,
+		"site"?: string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -220,9 +220,9 @@ export default class NativeJs {
 	 */
 	static shareFriends(sharevalue: {
 		"desc": string,
-		"imageUrl": string,
-		"shareType": string,
-		"site": string,
+		"imageUrl"?: string,
+		"shareType"?: string,
+		"site"?: string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -247,9 +247,9 @@ export default class NativeJs {
 	 */
 	static share(sharevalue: {
 		"desc": string,
-		"imageUrl": string,
-		"shareType": string,
-		"site": string,
+		"imageUrl"?: string,
+		"shareType"?: string,
+		"site"?: string,
 		"siteUrl": string,
 		"title": string,
 		"titleUrl": string,
@@ -440,6 +440,68 @@ export default class NativeJs {
 
 	static cangoback(goback){
 		baseNativeJs("cangoback",{ })
+	}
+
+	/**
+	 * 控制改变toolbar颜色与标题
+	 * @param title 
+	 * @param color 
+	 */
+	static toolbar(title,color){
+		baseNativeJs("toolbar",{title,color})
+	}
+
+	/**
+	 * 通知原生请求失败
+	 */
+	static requestfailed(){
+		baseNativeJs("requestfailed")
+	}
+
+	/**
+	 * 
+	 * @param user_id 开户
+	 * @param url 
+	 */
+	static opAccount(user_id,url){
+		baseNativeJs("opAccount",{user_id,url})
+	}
+
+	/**
+	 * 
+	 * @param user_id 交易
+	 * @param company_id 
+	 */
+	static trade(user_id,company_id){
+		baseNativeJs("trade",{user_id,company_id})
+	}
+
+	static bindAccount(user_id,company_id){
+		baseNativeJs("bindAccount",{user_id,company_id})
+	}
+
+	/**
+	 * 唤起支付sdk
+	 * @param order_id 
+	 * @param prepay 
+	 * @param paymethod 1是微信，2是支付宝，3线下支付
+	 */
+	static startPay(order_id,prepay,paymethod){
+		baseNativeJs("startPay",{order_id,prepay,paymethod})
+	}
+
+	/**
+	 * 直接调起适当性认证
+	 */
+	static startFsp(productId,riskScore){
+		baseNativeJs("startFsp",{productId,riskScore})
+	}
+
+	/**
+	 * 线下支付提示
+	 */
+	static offlineAlert(){
+		baseNativeJs("offlineAlert")
 	}
 }
 

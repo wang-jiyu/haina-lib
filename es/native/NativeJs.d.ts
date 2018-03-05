@@ -25,9 +25,9 @@ export default class NativeJs {
     static gorouter(router: string, iosRouter: string): any;
     static baseShare(name: any, sharevalue: {
         "desc": string;
-        "imageUrl": string;
-        "shareType": string;
-        "site": string;
+        "imageUrl"?: string;
+        "shareType"?: string;
+        "site"?: string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -49,9 +49,9 @@ export default class NativeJs {
      */
     static shareWeiXin(sharevalue: {
         "desc": string;
-        "imageUrl": string;
-        "shareType": string;
-        "site": string;
+        "imageUrl"?: string;
+        "shareType"?: string;
+        "site"?: string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -73,9 +73,9 @@ export default class NativeJs {
      */
     static shareFriends(sharevalue: {
         "desc": string;
-        "imageUrl": string;
-        "shareType": string;
-        "site": string;
+        "imageUrl"?: string;
+        "shareType"?: string;
+        "site"?: string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -97,9 +97,9 @@ export default class NativeJs {
      */
     static share(sharevalue: {
         "desc": string;
-        "imageUrl": string;
-        "shareType": string;
-        "site": string;
+        "imageUrl"?: string;
+        "shareType"?: string;
+        "site"?: string;
         "siteUrl": string;
         "title": string;
         "titleUrl": string;
@@ -185,4 +185,39 @@ export default class NativeJs {
     static statusBarStyle(style: any): void;
     static gotoapp(): void;
     static cangoback(goback: any): void;
+    /**
+     * 控制改变toolbar颜色与标题
+     * @param title
+     * @param color
+     */
+    static toolbar(title: any, color: any): void;
+    /**
+     * 通知原生请求失败
+     */
+    static requestfailed(): void;
+    /**
+     *
+     * @param user_id 开户
+     * @param url
+     */
+    static opAccount(user_id: any, url: any): void;
+    /**
+     *
+     * @param user_id 交易
+     * @param company_id
+     */
+    static trade(user_id: any, company_id: any): void;
+    static bindAccount(user_id: any, company_id: any): void;
+    /**
+     * 调起支付sdk
+     */
+    static startPay(order_id: any, prepay: any, paymethod: any): void;
+    /**
+     * 直接调起适当性认证
+     */
+    static startFsp(productId: any, riskScore: any): void;
+    /**
+     * 线下支付提示
+     */
+    static offlineAlert(): void;
 }
