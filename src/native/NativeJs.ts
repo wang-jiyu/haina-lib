@@ -486,23 +486,36 @@ export default class NativeJs {
 	 * @param prepay 
 	 * @param paymethod 1是微信，2是支付宝，3线下支付
 	 */
-	static startPay(order_id,prepay,paymethod){
-		baseNativeJs("startPay",{order_id,prepay,paymethod})
+	static getPayInfo(messageBody:{order_id,prepay,paymethod},callback){
+		window['getPayInfo'] = function (result: any) {
+			try {
+				result = result;
+			} catch (e) {
+				console.log('出错！');
+			}
+			if (result) {
+				callback(result);
+				// window['userInfo'].access_token=result;
+			}
+		}
+		baseNativeJs("getPayInfo",{messageBody})
 	}
 
 	/**
 	 * 直接调起适当性认证
 	 */
 	static startFsp(productId,riskScore){
+
 		baseNativeJs("startFsp",{productId,riskScore})
 	}
 
 	/**
 	 * 线下支付提示
 	 */
-	static offlineAlert(){
-		baseNativeJs("offlineAlert")
+	static offlinePayAlertMessage(){
+		baseNativeJs("alertMessage")
 	}
+
 }
 
 window["NativeJs"] = NativeJs

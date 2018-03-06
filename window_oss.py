@@ -11,7 +11,7 @@ class OSS_resouce(object):
 
     def bin_upload_files(self):
         self.bucket = oss2.Bucket(self.auth, 'http://oss-cn-beijing.aliyuncs.com', 'hn-web')
-        for root, dirs, files in os.walk('dist/v1.0.2', topdown=False):
+        for root, dirs, files in os.walk('dist/v1.0.3', topdown=False):
             for name in files:
                 print os.path.join(root,name).replace("\\","/")
                 self.bucket.put_object_from_file('web/js/{yun_name}'.format(yun_name=os.path.join(root, name).replace("\\","/")),'{local_name}'.format(local_name=os.path.join(root,name).replace("\\","/")))

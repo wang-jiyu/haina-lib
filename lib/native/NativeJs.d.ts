@@ -209,9 +209,16 @@ export default class NativeJs {
     static trade(user_id: any, company_id: any): void;
     static bindAccount(user_id: any, company_id: any): void;
     /**
-     * 调起支付sdk
+     * 唤起支付sdk
+     * @param order_id
+     * @param prepay
+     * @param paymethod 1是微信，2是支付宝，3线下支付
      */
-    static startPay(order_id: any, prepay: any, paymethod: any): void;
+    static getPayInfo(messageBody: {
+        order_id;
+        prepay;
+        paymethod;
+    }, callback: any): void;
     /**
      * 直接调起适当性认证
      */
@@ -219,5 +226,5 @@ export default class NativeJs {
     /**
      * 线下支付提示
      */
-    static offlineAlert(): void;
+    static offlinePayAlertMessage(): void;
 }

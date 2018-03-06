@@ -46,6 +46,6 @@ gulp.task("concat",function(){
             drop_console:true
         }
     }))
-    .pipe(gulp.dest('dist/v1.0.2'))
+    .pipe(gulp.dest('dist/v1.0.3'))
 })
 
