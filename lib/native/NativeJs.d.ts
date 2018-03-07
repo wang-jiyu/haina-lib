@@ -138,19 +138,7 @@ export default class NativeJs {
      *
      * @param 跳转banner页
      */
-    static gotoBanner(bannerdata: {
-        _id;
-        create_time;
-        image_url;
-        device_image_url;
-        intro;
-        link_url;
-        order;
-        target;
-        title;
-        link_type;
-        ref_type;
-    }): void;
+    static gotoBanner(bannerdata: any): void;
     /**
      * 跳转首页
      */
