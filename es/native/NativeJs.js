@@ -1,41 +1,46 @@
 import Utils from '../utils/Utils';
 import WXClass from '../wx/WXClass';
 export const baseNativeJs = (funcName, params, ios) => {
-    if (Utils.isApp()) {
-        if (typeof window['webkit'] != 'undefined') {
-            const realParam = ios ? Object.assign({}, {
-                "nativeCallJS": funcName
-            }, Object.assign({}, ios)) : Object.assign({}, {
-                "nativeCallJS": funcName
-            }, Object.assign({}, params));
-            console.log("nativeparam", realParam);
-            window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
+    try {
+        if (Utils.isApp()) {
+            if (typeof window['webkit'] != 'undefined') {
+                const realParam = ios ? Object.assign({}, {
+                    "nativeCallJS": funcName
+                }, Object.assign({}, ios)) : Object.assign({}, {
+                    "nativeCallJS": funcName
+                }, Object.assign({}, params));
+                console.log("nativeparam", realParam);
+                window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
+            }
+            else if (/Android/i.test(window.navigator.userAgent)) {
+                const realParam = Object.assign({}, {
+                    "nativecalljs": funcName
+                }, Object.assign({}, params)); //android
+                const paramstr = JSON.stringify(realParam);
+                console.log("nativeparam", paramstr);
+                window['haina'].pushEvent(paramstr);
+            }
         }
-        else if (/Android/i.test(window.navigator.userAgent)) {
-            const realParam = Object.assign({}, {
-                "nativecalljs": funcName
-            }, Object.assign({}, params)); //android
-            const paramstr = JSON.stringify(realParam);
-            console.log("nativeparam", paramstr);
-            window['haina'].pushEvent(paramstr);
+        else {
+            if (Utils.isIOS()) {
+                /* EXACT:http://m-test.0606.com.cn/diagnose/js/floatwindow.js*/
+                // window.location.href = 'ihayner://diagnosis_stock_activity:10050';
+                // setTimeout(function () { window.location.href = 'itms-apps://itunes.apple.com/app/id1236797754' }, 1000);
+            }
+            else if (Utils.isAndroid()) {
+                //此操作会调起app并阻止接下来的js执行
+                // let iframe = document.createElement("iframe")
+                // iframe.src = "ihayner://diagnosis_stock_activity:10050"
+                // iframe.style.display = "none"
+                // // let iframe = document.createElement("<iframe src='' style='display:none' target='' ></iframe>")
+                // document.body.appendChild(iframe);
+                // //没有安装应用会执行下面的语句
+                // setTimeout(function () { window.location.href = 'D' + 'download/download.html' }, 1000);
+            }
         }
     }
-    else {
-        if (Utils.isIOS()) {
-            /* EXACT:http://m-test.0606.com.cn/diagnose/js/floatwindow.js*/
-            // window.location.href = 'ihayner://diagnosis_stock_activity:10050';
-            // setTimeout(function () { window.location.href = 'itms-apps://itunes.apple.com/app/id1236797754' }, 1000);
-        }
-        else if (Utils.isAndroid()) {
-            //此操作会调起app并阻止接下来的js执行
-            // let iframe = document.createElement("iframe")
-            // iframe.src = "ihayner://diagnosis_stock_activity:10050"
-            // iframe.style.display = "none"
-            // // let iframe = document.createElement("<iframe src='' style='display:none' target='' ></iframe>")
-            // document.body.appendChild(iframe);
-            // //没有安装应用会执行下面的语句
-            // setTimeout(function () { window.location.href = 'D' + 'download/download.html' }, 1000);
-        }
+    catch (error) {
+        console.log("nativejs error", error);
     }
 };
 export default class NativeJs {

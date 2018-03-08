@@ -2,39 +2,43 @@
 import Utils from '../utils/Utils'
 import WXClass from '../wx/WXClass'
 export const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
-	if (Utils.isApp()) {
-		if (typeof window['webkit'] != 'undefined') {
-			const realParam = ios ? Object.assign({}, {
-				"nativeCallJS": funcName
-			}, { ...ios }) : Object.assign({}, {
-				"nativeCallJS": funcName
-			}, { ...params })
-			console.log("nativeparam", realParam)
-			window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
-		} else if (/Android/i.test(window.navigator.userAgent)) {
-			const realParam = Object.assign({}, {
-				"nativecalljs": funcName
-			}, { ...params })				       //android
-			const paramstr = JSON.stringify(realParam)
-			console.log("nativeparam", paramstr)
-			window['haina'].pushEvent(paramstr);
-		}
-	} else {
-		if (Utils.isIOS()) { //ios
-			/* EXACT:http://m-test.0606.com.cn/diagnose/js/floatwindow.js*/
-			// window.location.href = 'ihayner://diagnosis_stock_activity:10050';
-			// setTimeout(function () { window.location.href = 'itms-apps://itunes.apple.com/app/id1236797754' }, 1000);
-		} else if (Utils.isAndroid()) { //android
-			//此操作会调起app并阻止接下来的js执行
-			// let iframe = document.createElement("iframe")
-			// iframe.src = "ihayner://diagnosis_stock_activity:10050"
-			// iframe.style.display = "none"
-			// // let iframe = document.createElement("<iframe src='' style='display:none' target='' ></iframe>")
-			// document.body.appendChild(iframe);
-			// //没有安装应用会执行下面的语句
-			// setTimeout(function () { window.location.href = 'D' + 'download/download.html' }, 1000);
+	try {
+		if (Utils.isApp()) {
+			if (typeof window['webkit'] != 'undefined') {
+				const realParam = ios ? Object.assign({}, {
+					"nativeCallJS": funcName
+				}, { ...ios }) : Object.assign({}, {
+					"nativeCallJS": funcName
+				}, { ...params })
+				console.log("nativeparam", realParam)
+				window['webkit'].messageHandlers.jsCallNative.postMessage(realParam);
+			} else if (/Android/i.test(window.navigator.userAgent)) {
+				const realParam = Object.assign({}, {
+					"nativecalljs": funcName
+				}, { ...params })				       //android
+				const paramstr = JSON.stringify(realParam)
+				console.log("nativeparam", paramstr)
+				window['haina'].pushEvent(paramstr);
+			}
+		} else {
+			if (Utils.isIOS()) { //ios
+				/* EXACT:http://m-test.0606.com.cn/diagnose/js/floatwindow.js*/
+				// window.location.href = 'ihayner://diagnosis_stock_activity:10050';
+				// setTimeout(function () { window.location.href = 'itms-apps://itunes.apple.com/app/id1236797754' }, 1000);
+			} else if (Utils.isAndroid()) { //android
+				//此操作会调起app并阻止接下来的js执行
+				// let iframe = document.createElement("iframe")
+				// iframe.src = "ihayner://diagnosis_stock_activity:10050"
+				// iframe.style.display = "none"
+				// // let iframe = document.createElement("<iframe src='' style='display:none' target='' ></iframe>")
+				// document.body.appendChild(iframe);
+				// //没有安装应用会执行下面的语句
+				// setTimeout(function () { window.location.href = 'D' + 'download/download.html' }, 1000);
 
+			}
 		}
+	} catch (error) {
+		console.log("nativejs error", error)
 	}
 
 }
@@ -166,13 +170,13 @@ export default class NativeJs {
 			} catch (error) {
 				console.error("微信分享出错")
 			}
-		}else if(Utils.isQQ()){
+		} else if (Utils.isQQ()) {
 			try {
 				window["setShareInfo"]({
 					title,
-					summary:desc, // 分享内容
-					pic:imageUrl, // 分享图片
-					url:url // 分享链接
+					summary: desc, // 分享内容
+					pic: imageUrl, // 分享图片
+					url: url // 分享链接
 				});
 			} catch (error) {
 				console.error("QQ分享出错")
@@ -433,13 +437,13 @@ export default class NativeJs {
 	}
 
 	static gotoapp() {
-		if (!Utils.isApp()){
+		if (!Utils.isApp()) {
 			window.location.href = 'http://a.app.qq.com/o/simple.jsp?pkgname=com.sz.nniu'
 		}
 	}
 
-	static cangoback(goback){
-		baseNativeJs("cangoback",{ })
+	static cangoback(goback) {
+		baseNativeJs("cangoback", {})
 	}
 
 	/**
@@ -447,14 +451,14 @@ export default class NativeJs {
 	 * @param title 
 	 * @param color 
 	 */
-	static toolbar(title,color){
-		baseNativeJs("toolbar",{title,color})
+	static toolbar(title, color) {
+		baseNativeJs("toolbar", { title, color })
 	}
 
 	/**
 	 * 通知原生请求失败
 	 */
-	static requestfailed(){
+	static requestfailed() {
 		baseNativeJs("requestfailed")
 	}
 
@@ -463,8 +467,8 @@ export default class NativeJs {
 	 * @param user_id 开户
 	 * @param url 
 	 */
-	static opAccount(user_id,url){
-		baseNativeJs("opAccount",{user_id,url})
+	static opAccount(user_id, url) {
+		baseNativeJs("opAccount", { user_id, url })
 	}
 
 	/**
@@ -472,12 +476,12 @@ export default class NativeJs {
 	 * @param user_id 交易
 	 * @param company_id 
 	 */
-	static trade(user_id,company_id){
-		baseNativeJs("trade",{user_id,company_id})
+	static trade(user_id, company_id) {
+		baseNativeJs("trade", { user_id, company_id })
 	}
 
-	static bindAccount(user_id,company_id){
-		baseNativeJs("bindAccount",{user_id,company_id})
+	static bindAccount(user_id, company_id) {
+		baseNativeJs("bindAccount", { user_id, company_id })
 	}
 
 	/**
@@ -486,7 +490,7 @@ export default class NativeJs {
 	 * @param prepay 
 	 * @param paymethod 1是微信，2是支付宝，3线下支付
 	 */
-	static getPayInfo(messageBody:{order_id,prepay,paymethod},callback){
+	static getPayInfo(messageBody: { order_id, prepay, paymethod }, callback) {
 		window['getPayInfo'] = function (result: any) {
 			try {
 				result = result;
@@ -498,21 +502,21 @@ export default class NativeJs {
 				// window['userInfo'].access_token=result;
 			}
 		}
-		baseNativeJs("getPayInfo",{messageBody})
+		baseNativeJs("getPayInfo", { messageBody })
 	}
 
 	/**
 	 * 直接调起适当性认证
 	 */
-	static startFsp(productId,riskScore){
+	static startFsp(productId, riskScore) {
 
-		baseNativeJs("startFsp",{productId,riskScore})
+		baseNativeJs("startFsp", { productId, riskScore })
 	}
 
 	/**
 	 * 线下支付提示
 	 */
-	static offlinePayAlertMessage(){
+	static offlinePayAlertMessage() {
 		baseNativeJs("alertMessage")
 	}
 
