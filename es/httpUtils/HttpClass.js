@@ -6,13 +6,8 @@ export default class HttpClient {
             if (response.data.code === 200) {
                 return response;
             }
-            else if (response.data.code === 40010) {
+            else if (response.data.code === 40010 || response.data.code === 401 || response.data.code === 40019) {
                 //java后台
-                NativeJs.refreshtoken_load();
-                return Promise.reject(response.data);
-            }
-            else if (response.data.code === 401) {
-                //go后台
                 NativeJs.refreshtoken_load();
                 return Promise.reject(response.data);
             }

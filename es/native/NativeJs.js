@@ -56,7 +56,6 @@ export default class NativeJs {
      */
     static login(callback) {
         window['refreshtoken'] = function (result) {
-            delete window['refreshtoken'];
             try {
                 result = result;
             }
@@ -339,8 +338,10 @@ export default class NativeJs {
      */
     static getRequestHead(callback) {
         window['getRequestHead'] = function (result) {
-            delete window['getRequestHead'];
             try {
+                if (typeof result === 'string') {
+                    result = JSON.parse(result);
+                }
                 result = result;
             }
             catch (e) {
@@ -351,6 +352,23 @@ export default class NativeJs {
             }
         };
         return baseNativeJs("getRequestHead");
+    }
+    static getPayRequestHead(callback) {
+        window['getPayRequestHead'] = function (result) {
+            try {
+                if (typeof result === 'string') {
+                    result = JSON.parse(result);
+                }
+                result = result;
+            }
+            catch (e) {
+                console.log('出错！');
+            }
+            if (result) {
+                callback(result);
+            }
+        };
+        return baseNativeJs("getPayRequestHead");
     }
     /**
      * 拨打电话
@@ -374,7 +392,7 @@ export default class NativeJs {
         }
     }
     static cangoback(goback) {
-        baseNativeJs("cangoback", {});
+        baseNativeJs("cangoback", { goback });
     }
     /**
      * 控制改变toolbar颜色与标题

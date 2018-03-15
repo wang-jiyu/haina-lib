@@ -165,6 +165,7 @@ export default class NativeJs {
      * 获取埋点头
      */
     static getRequestHead(callback: any): void;
+    static getPayRequestHead(callback: any): void;
     /**
      * 拨打电话
      */

@@ -55,7 +55,6 @@ export default class NativeJs {
 	 */
 	static login(callback: Function): any {
 		window['refreshtoken'] = function (result: any) {
-			delete window['refreshtoken'];
 			try {
 				result = result;
 			} catch (e) {
@@ -403,8 +402,10 @@ export default class NativeJs {
 	 */
 	static getRequestHead(callback) {
 		window['getRequestHead'] = function (result: any) {
-			delete window['getRequestHead'];
 			try {
+				if (typeof result === 'string') {
+					result = JSON.parse(result)
+				}
 				result = result;
 			} catch (e) {
 				console.log('出错！');
@@ -414,6 +415,23 @@ export default class NativeJs {
 			}
 		}
 		return baseNativeJs("getRequestHead")
+	}
+
+	static getPayRequestHead(callback) {
+		window['getPayRequestHead'] = function (result: any) {
+			try {
+				if (typeof result === 'string') {
+					result = JSON.parse(result)
+				}
+				result = result;
+			} catch (e) {
+				console.log('出错！');
+			}
+			if (result) {
+				callback(result);
+			}
+		}
+		return baseNativeJs("getPayRequestHead")
 	}
 
 	/**
@@ -443,7 +461,7 @@ export default class NativeJs {
 	}
 
 	static cangoback(goback) {
-		baseNativeJs("cangoback", {})
+		baseNativeJs("cangoback", {goback})
 	}
 
 	/**
