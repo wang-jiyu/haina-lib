@@ -12,7 +12,7 @@ const concat = require("gulp-concat");
 gulp.task('es', function () {
     tsProj.options.target = 2;
     return gulp.src('src/**/*{ts,tsx}')
-        .pipe(ts(tsProj))
+        .pipe(tsProj())
         .pipe(gulp.dest('es'));
 });
 
@@ -20,7 +20,7 @@ gulp.task('es', function () {
 gulp.task('lib', function () {
     tsProj.options.target = 1;
     return gulp.src('src/**/*{ts,tsx}')
-        .pipe(ts(tsProj))
+        .pipe(tsProj())
         .pipe(gulp.dest('lib'));
 });
 

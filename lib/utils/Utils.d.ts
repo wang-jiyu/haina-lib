@@ -47,4 +47,15 @@ export default class Utils {
     static loadOutJS(jsurl: string, async?: boolean): void;
     static isWx(): boolean;
     static isQQ(): boolean;
+    static CheckIdCard: {
+        Wi: number[];
+        Xi: (string | number)[];
+        Pi: number[];
+        brithday18: (sIdCard: any) => boolean;
+        brithday15: (sIdCard: any) => boolean;
+        validate: (sIdCard: any) => boolean;
+        province: (sIdCard: any) => boolean;
+    };
+    static IDCardVerify(idNo: any, successCallback: any, errCallback: any): any;
+    static isChineseName(name: any): boolean;
 }
