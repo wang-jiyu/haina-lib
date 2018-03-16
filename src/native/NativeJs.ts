@@ -511,13 +511,9 @@ export default class NativeJs {
 	static getPayInfo(messageBody: { order_id, prepay, paymethod }, callback) {
 		window['getPayInfo'] = function (result: any) {
 			try {
-				result = result;
+				callback(result)
 			} catch (e) {
 				console.log('出错！');
-			}
-			if (result) {
-				callback(result);
-				// window['userInfo'].access_token=result;
 			}
 		}
 		baseNativeJs("getPayInfo", { messageBody })
