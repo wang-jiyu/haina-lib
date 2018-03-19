@@ -189,7 +189,7 @@ export default class Utils {
     static IDCardVerify(idNo,successCallback,errCallback){
         let sIdCard=idNo&&idNo.replace(/^\s+|\s+$/g,"")||'';
         if (sIdCard.match(/^\d{14,17}(\d|X)$/gi)==null) {
-            let info = {code:1000,errMsg:'身份证号码须为18位或15位数字'};
+            let info = {code:1000,errMsg:'身份证号码须为18位'};
             try{
                 if(errCallback){
                     if(typeof errCallback === "function"){
