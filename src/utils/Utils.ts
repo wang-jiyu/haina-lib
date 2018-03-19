@@ -238,7 +238,7 @@ export default class Utils {
                     console.log(err);
                 }
             }
-        }else if(sIdCard.length==15){
+        }/*else if(sIdCard.length==15){
             if (Utils.CheckIdCard.province(sIdCard)&&Utils.CheckIdCard.brithday15(sIdCard)) {
                 let info = {code:200,errMsg:'身份证号码合法'};
                 try{
@@ -270,12 +270,12 @@ export default class Utils {
                     console.log(err);
                 }
             }
-        }
+        }*/
     }
 
 
     static isChineseName(name) {
-        const regName = /^[\u4e00-\u9fa5]{2,4}$/;
+        const regName = /^[\u4e00-\u9fa5]{2,13}$/;
         if (!regName.test(name)) {
             return false;
         }
