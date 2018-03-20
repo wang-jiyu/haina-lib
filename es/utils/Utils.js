@@ -78,7 +78,7 @@ export default class Utils {
     static IDCardVerify(idNo, successCallback, errCallback) {
         let sIdCard = idNo && idNo.replace(/^\s+|\s+$/g, "") || '';
         if (sIdCard.match(/^\d{14,17}(\d|X)$/gi) == null) {
-            let info = { code: 1000, errMsg: '身份证号码须为18位或15位数字' };
+            let info = { code: 1000, errMsg: '身份证号码须为18位' };
             try {
                 if (errCallback) {
                     if (typeof errCallback === "function") {
@@ -117,7 +117,7 @@ export default class Utils {
                 }
             }
             else {
-                let info = { code: 1001, errMsg: '请输入有效的身份证号码' };
+                let info = { code: 1001, errMsg: '姓名与身份证号码不匹配' };
                 try {
                     if (errCallback) {
                         if (typeof errCallback === "function") {
@@ -135,50 +135,42 @@ export default class Utils {
                     console.log(err);
                 }
             }
-        }
-        else if (sIdCard.length == 15) {
-            if (Utils.CheckIdCard.province(sIdCard) && Utils.CheckIdCard.brithday15(sIdCard)) {
-                let info = { code: 200, errMsg: '身份证号码合法' };
-                try {
-                    if (successCallback) {
-                        if (typeof successCallback === "function") {
+        } /*else if(sIdCard.length==15){
+            if (Utils.CheckIdCard.province(sIdCard)&&Utils.CheckIdCard.brithday15(sIdCard)) {
+                let info = {code:200,errMsg:'身份证号码合法'};
+                try{
+                    if(successCallback){
+                        if(typeof successCallback === "function"){
                             return successCallback(info);
-                        }
-                        else {
+                        }else{
                             return info;
                         }
-                    }
-                    else {
+                    }else {
                         return true;
                     }
-                }
-                catch (err) {
+                }catch (err){
                     console.log(err);
                 }
-            }
-            else {
-                let info = { code: 1001, errMsg: '请输入有效的身份证号码' };
-                try {
-                    if (errCallback) {
-                        if (typeof errCallback === "function") {
+            }else {
+                let info = {code:1001,errMsg:'请输入有效的身份证号码'};
+                try{
+                    if(errCallback){
+                        if(typeof errCallback === "function"){
                             return errCallback(info);
-                        }
-                        else {
+                        }else{
                             return info;
                         }
-                    }
-                    else {
+                    }else {
                         return false;
                     }
-                }
-                catch (err) {
+                }catch (err){
                     console.log(err);
                 }
             }
-        }
+        }*/
     }
     static isChineseName(name) {
-        const regName = /^[\u4e00-\u9fa5]{2,4}$/;
+        const regName = /^[\u4e00-\u9fa5]{2,13}$/;
         if (!regName.test(name)) {
             return false;
         }

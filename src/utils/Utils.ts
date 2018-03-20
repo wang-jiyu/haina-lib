@@ -222,7 +222,7 @@ export default class Utils {
                     console.log(err);
                 }
             }else {
-                let info = {code:1001,errMsg:'请输入有效的身份证号码'};
+                let info = {code:1001,errMsg:'姓名与身份证号码不匹配'};
                 try{
                     if(errCallback){
                         if(typeof errCallback === "function"){

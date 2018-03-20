@@ -436,14 +436,10 @@ export default class NativeJs {
     static getPayInfo(messageBody, callback) {
         window['getPayInfo'] = function (result) {
             try {
-                result = result;
+                callback(result);
             }
             catch (e) {
                 console.log('出错！');
-            }
-            if (result) {
-                callback(result);
-                // window['userInfo'].access_token=result;
             }
         };
         baseNativeJs("getPayInfo", { messageBody });
