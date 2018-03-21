@@ -216,4 +216,38 @@ export default class NativeJs {
      * 线下支付提示
      */
     static offlinePayAlertMessage(): void;
+    /**
+     * 海纳适当性页面 需要提示用户拨打电话时进行的弹框
+     * @param phone 手机号码
+     * @param content 显示内容
+     * @param title 标题
+     */
+    static callPhoneAlert(phone: number, content: string, title: string): void;
+    /**
+     * 当购买业务时，如果用户不符合当前产品，弹框提示重新做或者打电话
+     * @param phone
+     * @param content
+     * @param title
+     * @param callback
+     */
+    static riskAlert(phone: number, content: string, title: string, callback: Function): void;
+    /**
+     * 回调原声通知原声实名认证已经完成
+     * @param name
+     */
+    static authSuccess(name: string): void;
+    /**
+     * 回调风险测评成功
+     * @param type_string 类型的名称 例如:稳健性，激进型
+     * @param risk_score 风险测评的分数
+     */
+    static riskSuccess(type_string: string, risk_score: number): void;
+    /** 通知原声app整个开通流程完毕 */
+    static confirmationSuccess(): void;
+    /**
+     * 通知原声app适当性中途意外出错
+     * @param err_code 后台返回的错误码
+     * @param err_msg 接口返回的错误描述
+     */
+    static fspFailed(err_code: number, err_msg: string): void;
 }
