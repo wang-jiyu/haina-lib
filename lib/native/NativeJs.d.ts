@@ -222,7 +222,7 @@ export default class NativeJs {
      * @param content 显示内容
      * @param title 标题
      */
-    static callPhoneAlert(phone: number, content: string, title: string): void;
+    static callPhoneAlert(phone: string, content: string, title: string): void;
     /**
      * 当购买业务时，如果用户不符合当前产品，弹框提示重新做或者打电话
      * @param phone
@@ -230,7 +230,7 @@ export default class NativeJs {
      * @param title
      * @param callback
      */
-    static riskAlert(phone: number, content: string, title: string, callback: Function): void;
+    static riskAlert(phone: string, content: string, title: string, callback: Function): void;
     /**
      * 回调原声通知原声实名认证已经完成
      * @param name

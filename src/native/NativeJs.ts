@@ -540,7 +540,7 @@ export default class NativeJs {
 	 * @param content 显示内容
 	 * @param title 标题
 	 */
-	static callPhoneAlert(phone:number,content:string,title:string){
+	static callPhoneAlert(phone:string,content:string,title:string){
 		baseNativeJs("callPhoneAlert",{phone,content,title})
 	}
 
@@ -551,7 +551,7 @@ export default class NativeJs {
 	 * @param title 
 	 * @param callback 
 	 */
-	static riskAlert(phone:number,content:string,title:string,callback:Function){
+	static riskAlert(phone:string,content:string,title:string,callback:Function){
 		window['riskAlert'] = function (result) {
 			try {
 				callback(result)
