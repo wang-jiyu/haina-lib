@@ -511,5 +511,24 @@ export default class NativeJs {
     static fspFailed(err_code, err_msg, fsp_type) {
         baseNativeJs("fspFailed", { err_code, err_msg, fsp_type });
     }
+    /** h5红包关闭按钮 */
+    static closePoup() {
+        baseNativeJs('closePoup');
+    }
+    /**
+     * 调用原生发送验证码
+     * @param phone 手机号
+     */
+    static sendCodeToH5(phone) {
+        baseNativeJs('sendCodeToH5', { phone });
+    }
+    /**
+     * h5通知app快速登录
+     * @param phone  手机号
+     * @param code 验证码
+     */
+    static hbLogin(phone, code) {
+        baseNativeJs('hbLogin', { phone, code });
+    }
 }
 window["NativeJs"] = NativeJs;

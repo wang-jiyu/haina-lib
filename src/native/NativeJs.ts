@@ -590,8 +590,30 @@ export default class NativeJs {
 	 * @param err_msg 接口返回的错误描述
 	 * @param fsp_type 1实名，2风险，3签署协议
 	 */
-	static fspFailed(err_code:number,err_msg:string,fsp_type:string){
+	static fspFailed(err_code:number,err_msg:string,fsp_type:number){
 		baseNativeJs("fspFailed",{err_code,err_msg,fsp_type})
+	}
+
+	/** h5红包关闭按钮 */
+	static closePoup(){
+		baseNativeJs('closePoup')
+	}
+
+	/**
+	 * 调用原生发送验证码
+	 * @param phone 手机号
+	 */
+	static sendCodeToH5(phone:string){
+		baseNativeJs('sendCodeToH5',{phone})
+	}
+
+	/**
+	 * h5通知app快速登录
+	 * @param phone  手机号
+	 * @param code 验证码
+	 */
+	static hbLogin(phone:string,code:string){
+		baseNativeJs('hbLogin',{phone,code})
 	}
 
 }
