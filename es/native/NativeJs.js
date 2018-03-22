@@ -506,9 +506,10 @@ export default class NativeJs {
      * 通知原声app适当性中途意外出错
      * @param err_code 后台返回的错误码
      * @param err_msg 接口返回的错误描述
+     * @param fsp_type 1实名，2风险，3签署协议
      */
-    static fspFailed(err_code, err_msg) {
-        baseNativeJs("fspFailed", { err_code, err_msg });
+    static fspFailed(err_code, err_msg, fsp_type) {
+        baseNativeJs("fspFailed", { err_code, err_msg, fsp_type });
     }
 }
 window["NativeJs"] = NativeJs;
