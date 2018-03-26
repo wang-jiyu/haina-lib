@@ -374,6 +374,7 @@ export default class NativeJs {
 	 */
 	static changeBodyFontSize(isshow, callback) {
 		window['changeBodyFontSize'] = function (result: any) {
+			delete window['changeBodyFontSize']
 			try {
 				result = result;
 			} catch (e) {
@@ -402,6 +403,7 @@ export default class NativeJs {
 	 */
 	static getRequestHead(callback) {
 		window['getRequestHead'] = function (result: any) {
+			delete window['getRequestHead']
 			try {
 				if (typeof result === 'string') {
 					result = JSON.parse(result)
@@ -419,6 +421,7 @@ export default class NativeJs {
 
 	static getPayRequestHead(callback) {
 		window['getPayRequestHead'] = function (result: any) {
+			delete window['getPayRequestHead']
 			try {
 				if (typeof result === 'string') {
 					result = JSON.parse(result)
@@ -510,6 +513,7 @@ export default class NativeJs {
 	 */
 	static getPayInfo(messageBody: { order_id, prepay, paymethod }, callback) {
 		window['getPayInfo'] = function (result: any) {
+			delete window['getPayInfo']
 			try {
 				callback(result)
 			} catch (e) {
@@ -553,6 +557,7 @@ export default class NativeJs {
 	 */
 	static riskAlert(phone:string,content:string,title:string,callback:Function){
 		window['riskAlert'] = function (result) {
+			delete window['riskAlert']
 			try {
 				callback(result)
 			} catch (e) {
@@ -612,7 +617,15 @@ export default class NativeJs {
 	 * @param phone  手机号
 	 * @param code 验证码
 	 */
-	static hbLogin(phone:string,code:string){
+	static hbLogin(phone:string,code:string,callback:Function){
+		window['hbLogin'] = function (result) {
+			delete window['hbLogin']
+			try {
+				callback(result)
+			} catch (e) {
+				console.log('riskAlert出错！');
+			}
+		}
 		baseNativeJs('hbLogin',{phone,code})
 	}
 

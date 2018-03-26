@@ -263,5 +263,5 @@ export default class NativeJs {
      * @param phone  手机号
      * @param code 验证码
      */
-    static hbLogin(phone: string, code: string): void;
+    static hbLogin(phone: string, code: string, callback: Function): void;
 }

@@ -312,6 +312,7 @@ export default class NativeJs {
      */
     static changeBodyFontSize(isshow, callback) {
         window['changeBodyFontSize'] = function (result) {
+            delete window['changeBodyFontSize'];
             try {
                 result = result;
             }
@@ -338,6 +339,7 @@ export default class NativeJs {
      */
     static getRequestHead(callback) {
         window['getRequestHead'] = function (result) {
+            delete window['getRequestHead'];
             try {
                 if (typeof result === 'string') {
                     result = JSON.parse(result);
@@ -355,6 +357,7 @@ export default class NativeJs {
     }
     static getPayRequestHead(callback) {
         window['getPayRequestHead'] = function (result) {
+            delete window['getPayRequestHead'];
             try {
                 if (typeof result === 'string') {
                     result = JSON.parse(result);
@@ -435,6 +438,7 @@ export default class NativeJs {
      */
     static getPayInfo(messageBody, callback) {
         window['getPayInfo'] = function (result) {
+            delete window['getPayInfo'];
             try {
                 callback(result);
             }
@@ -474,6 +478,7 @@ export default class NativeJs {
      */
     static riskAlert(phone, content, title, callback) {
         window['riskAlert'] = function (result) {
+            delete window['riskAlert'];
             try {
                 callback(result);
             }
@@ -527,7 +532,16 @@ export default class NativeJs {
      * @param phone  手机号
      * @param code 验证码
      */
-    static hbLogin(phone, code) {
+    static hbLogin(phone, code, callback) {
+        window['hbLogin'] = function (result) {
+            delete window['hbLogin'];
+            try {
+                callback(result);
+            }
+            catch (e) {
+                console.log('riskAlert出错！');
+            }
+        };
         baseNativeJs('hbLogin', { phone, code });
     }
 }
