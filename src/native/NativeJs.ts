@@ -1,6 +1,7 @@
 
 import Utils from '../utils/Utils'
 import WXClass from '../wx/WXClass'
+import Storage from '../storage/Storage';
 export const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
 	try {
 		if (Utils.isApp()) {
@@ -72,8 +73,12 @@ export default class NativeJs {
 	 * 刷新token
 	 */
 	static refreshtoken_load(): any {
-
-		return baseNativeJs("refreshtoken_reload")
+		if(Utils.isApp()){
+			return baseNativeJs("refreshtoken_reload")
+		}else {
+			Storage.remove("localstorage_login")
+			window.location.href = '/login'
+		}
 	}
 
 	/**
