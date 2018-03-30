@@ -1,6 +1,5 @@
 import Utils from '../utils/Utils';
 import WXClass from '../wx/WXClass';
-import Storage from '../storage/Storage';
 export const baseNativeJs = (funcName, params, ios) => {
     try {
         if (Utils.isApp()) {
@@ -78,8 +77,7 @@ export default class NativeJs {
             return baseNativeJs("refreshtoken_reload");
         }
         else {
-            Storage.remove("localstorage_login");
-            window.location.href = '/login';
+            Utils.redirectLogin();
         }
     }
     /**
@@ -106,7 +104,7 @@ export default class NativeJs {
     static gorouter(router, iosRouter) {
         return baseNativeJs('gorouter', { router }, { router: iosRouter });
     }
-    static baseShare(name, sharevalue) {
+    static baseShare(name, sharevalue, footer = true) {
         let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc, shareType, site } = sharevalue;
         imageUrl = imageUrl || "https://m2.0606.com.cn/assets/images/logo.png";
         shareType = shareType || "all";
@@ -129,15 +127,17 @@ export default class NativeJs {
             return url;
         }
         if (Utils.isApp()) {
-            if (window.location.search && window.location.search !== '') {
-                siteUrl = siteUrl + '&innerapp=hayner';
-                url = url + '&innerapp=hayner';
-                titleUrl = titleUrl + '&innerapp=hayner';
-            }
-            else {
-                siteUrl = siteUrl + '?innerapp=hayner';
-                url = url + '?innerapp=hayner';
-                titleUrl = titleUrl + '?innerapp=hayner';
+            if (footer) {
+                if (window.location.search && window.location.search !== '') {
+                    siteUrl = siteUrl + '&innerapp=hayner';
+                    url = url + '&innerapp=hayner';
+                    titleUrl = titleUrl + '&innerapp=hayner';
+                }
+                else {
+                    siteUrl = siteUrl + '?innerapp=hayner';
+                    url = url + '?innerapp=hayner';
+                    titleUrl = titleUrl + '?innerapp=hayner';
+                }
             }
             sharevalue = Object.assign({}, sharevalue, {
                 siteUrl: relaceUrl(siteUrl),
@@ -192,8 +192,8 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareWeiXin(sharevalue) {
-        NativeJs.baseShare('shareWeiXin', sharevalue);
+    static shareWeiXin(sharevalue, footer) {
+        NativeJs.baseShare('shareWeiXin', sharevalue, footer);
     }
     /**
      * 分享到朋友圈
@@ -207,8 +207,8 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static shareFriends(sharevalue) {
-        NativeJs.baseShare('shareFriends', sharevalue);
+    static shareFriends(sharevalue, footer) {
+        NativeJs.baseShare('shareFriends', sharevalue, footer);
     }
     /**
      * 调用移动端的分享
@@ -222,8 +222,8 @@ export default class NativeJs {
      * @param titleUrl 标题的url
      * @param url 本身的链接
      */
-    static share(sharevalue) {
-        NativeJs.baseShare('share', sharevalue);
+    static share(sharevalue, footer) {
+        NativeJs.baseShare('share', sharevalue, footer);
     }
     /**
      *
@@ -546,10 +546,22 @@ export default class NativeJs {
                 callback(result);
             }
             catch (e) {
-                console.log('riskAlert出错！');
+                console.log('hbLogin出错！');
             }
         };
         baseNativeJs('hbLogin', { phone, code });
+    }
+    static getHomeActivityData(callback) {
+        window['getHomeActivityData'] = function (result) {
+            delete window['getHomeActivityData'];
+            try {
+                callback(result);
+            }
+            catch (e) {
+                console.log('getHomeActivityData出错！');
+            }
+        };
+        baseNativeJs('getHomeActivityData');
     }
 }
 window["NativeJs"] = NativeJs;

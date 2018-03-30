@@ -1,7 +1,6 @@
 
 import Utils from '../utils/Utils'
 import WXClass from '../wx/WXClass'
-import Storage from '../storage/Storage';
 export const baseNativeJs = (funcName: string, params?: object, ios?: object) => {
 	try {
 		if (Utils.isApp()) {
@@ -76,8 +75,7 @@ export default class NativeJs {
 		if(Utils.isApp()){
 			return baseNativeJs("refreshtoken_reload")
 		}else {
-			Storage.remove("localstorage_login")
-			window.location.href = '/login'
+			Utils.redirectLogin()
 		}
 	}
 
@@ -118,7 +116,7 @@ export default class NativeJs {
 		"url": string,
 		"eventId"?: string,
 		"parameter"?: Object
-	}) {
+	},footer:boolean=true) {
 		let { siteUrl, url, titleUrl, parameter, title, imageUrl, desc, shareType, site } = sharevalue
 		imageUrl = imageUrl || "https://m2.0606.com.cn/assets/images/logo.png"
 		shareType = shareType || "all"
@@ -140,14 +138,16 @@ export default class NativeJs {
 			return url
 		}
 		if (Utils.isApp()) {
-			if (window.location.search && window.location.search !== '') {
-				siteUrl = siteUrl + '&innerapp=hayner'
-				url = url + '&innerapp=hayner'
-				titleUrl = titleUrl + '&innerapp=hayner'
-			} else {
-				siteUrl = siteUrl + '?innerapp=hayner'
-				url = url + '?innerapp=hayner'
-				titleUrl = titleUrl + '?innerapp=hayner'
+			if(footer){
+				if (window.location.search && window.location.search !== '') {
+					siteUrl = siteUrl + '&innerapp=hayner'
+					url = url + '&innerapp=hayner'
+					titleUrl = titleUrl + '&innerapp=hayner'
+				} else {
+					siteUrl = siteUrl + '?innerapp=hayner'
+					url = url + '?innerapp=hayner'
+					titleUrl = titleUrl + '?innerapp=hayner'
+				}
 			}
 
 			sharevalue = Object.assign({}, sharevalue, {
@@ -210,8 +210,8 @@ export default class NativeJs {
 		"url": string,
 		"eventId"?: string,
 		"parameter"?: Object
-	}) {
-		NativeJs.baseShare('shareWeiXin', sharevalue)
+	},footer?:boolean) {
+		NativeJs.baseShare('shareWeiXin', sharevalue, footer)
 	}
 
 	/**
@@ -237,8 +237,8 @@ export default class NativeJs {
 		"url": string,
 		"eventId"?: string,
 		"parameter"?: Object
-	}) {
-		NativeJs.baseShare('shareFriends', sharevalue)
+	},footer?:boolean) {
+		NativeJs.baseShare('shareFriends', sharevalue,footer)
 	}
 
 	/**
@@ -264,8 +264,8 @@ export default class NativeJs {
 		"url": string,
 		"eventId"?: string,
 		"parameter"?: Object
-	}) {
-		NativeJs.baseShare('share', sharevalue)
+	},footer?:boolean) {
+		NativeJs.baseShare('share', sharevalue, footer)
 	}
 
 
@@ -628,10 +628,22 @@ export default class NativeJs {
 			try {
 				callback(result)
 			} catch (e) {
-				console.log('riskAlert出错！');
+				console.log('hbLogin出错！');
 			}
 		}
 		baseNativeJs('hbLogin',{phone,code})
+	}
+
+	static getHomeActivityData(callback:Function){
+		window['getHomeActivityData'] = function (result) {
+			delete window['getHomeActivityData']
+			try {
+				callback(result)
+			} catch (e) {
+				console.log('getHomeActivityData出错！');
+			}
+		}
+		baseNativeJs('getHomeActivityData')
 	}
 
 }

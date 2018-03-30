@@ -1,3 +1,4 @@
+import Storage from "../storage/Storage";
 export default class Utils {
     static UUID() {
         function s4() {
@@ -175,6 +176,10 @@ export default class Utils {
             return false;
         }
         return true;
+    }
+    static redirectLogin() {
+        Storage.remove("localstorage_login");
+        window["webviewHistory"].push('/login');
     }
 }
 Utils.phoneRegex = {

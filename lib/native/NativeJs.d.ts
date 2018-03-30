@@ -34,7 +34,7 @@ export default class NativeJs {
         "url": string;
         "eventId"?: string;
         "parameter"?: Object;
-    }): void;
+    }, footer?: boolean): void;
     /**
      * 分享到微信
      * @param shareValue
@@ -58,7 +58,7 @@ export default class NativeJs {
         "url": string;
         "eventId"?: string;
         "parameter"?: Object;
-    }): void;
+    }, footer?: boolean): void;
     /**
      * 分享到朋友圈
      * @param shareFriends
@@ -82,7 +82,7 @@ export default class NativeJs {
         "url": string;
         "eventId"?: string;
         "parameter"?: Object;
-    }): void;
+    }, footer?: boolean): void;
     /**
      * 调用移动端的分享
      * @param shareFriends
@@ -106,7 +106,7 @@ export default class NativeJs {
         "url": string;
         "eventId"?: string;
         "parameter"?: Object;
-    }): void;
+    }, footer?: boolean): void;
     /**
      *
      * @param product_id 适当性检测
@@ -264,4 +264,5 @@ export default class NativeJs {
      * @param code 验证码
      */
     static hbLogin(phone: string, code: string, callback: Function): void;
+    static getHomeActivityData(callback: Function): void;
 }

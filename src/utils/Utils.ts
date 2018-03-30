@@ -1,3 +1,5 @@
+import Storage from "../storage/Storage";
+
 export default class Utils {
 
     static phoneRegex = {
@@ -130,7 +132,7 @@ export default class Utils {
         Xi: [1, 0, "X", 9, 8, 7, 6, 5, 4, 3, 2],
         Pi: [11, 12, 13, 14, 15, 21, 22, 23, 31, 32, 33, 34, 35, 36, 37, 41, 42, 43, 44, 45, 46, 50, 51, 52, 53, 54, 61, 62, 63, 64, 65, 71, 81, 82, 91],
 
-    //检验18位身份证号码出生日期是否有效
+        //检验18位身份证号码出生日期是否有效
         //parseFloat过滤前导零，年份必需大于等于1900且小于等于当前年份，用Date()对象判断日期是否有效。
         brithday18: function (sIdCard) {
             const year = parseFloat(sIdCard.substr(6, 4));
@@ -144,7 +146,7 @@ export default class Utils {
             return false
         },
 
-    //检验15位身份证号码出生日期是否有效
+        //检验15位身份证号码出生日期是否有效
         brithday15: function (sIdCard) {
             const year = parseFloat(sIdCard.substr(6, 2));
             const month = parseFloat(sIdCard.substr(8, 2));
@@ -157,7 +159,7 @@ export default class Utils {
             return false
         },
 
-    //检验校验码是否有效
+        //检验校验码是否有效
         validate: function (sIdCard) {
             const aIdCard = sIdCard.split("");
             let sum = 0;
@@ -173,7 +175,7 @@ export default class Utils {
             return false
         },
 
-    //检验输入的省份编码是否有效
+        //检验输入的省份编码是否有效
         province: function (sIdCard) {
             let p2 = sIdCard.substr(0, 2);
             for (let i = 0; i < this.Pi.length; i++) {
@@ -186,55 +188,55 @@ export default class Utils {
 
     };
 
-    static IDCardVerify(idNo,successCallback,errCallback){
-        let sIdCard=idNo&&idNo.replace(/^\s+|\s+$/g,"")||'';
-        if (sIdCard.match(/^\d{14,17}(\d|X)$/gi)==null) {
-            let info = {code:1000,errMsg:'身份证号码须为18位'};
-            try{
-                if(errCallback){
-                    if(typeof errCallback === "function"){
+    static IDCardVerify(idNo, successCallback, errCallback) {
+        let sIdCard = idNo && idNo.replace(/^\s+|\s+$/g, "") || '';
+        if (sIdCard.match(/^\d{14,17}(\d|X)$/gi) == null) {
+            let info = { code: 1000, errMsg: '身份证号码须为18位' };
+            try {
+                if (errCallback) {
+                    if (typeof errCallback === "function") {
                         return errCallback(info);
-                    }else{
+                    } else {
                         return info;
                     }
-                }else{
+                } else {
                     return false;
                 }
 
-            }catch (err){
+            } catch (err) {
                 console.log(err);
             }
-        }else if(sIdCard.length==18){
-            if(Utils.CheckIdCard.province(sIdCard)&&Utils.CheckIdCard.brithday18(sIdCard)&&Utils.CheckIdCard.validate(sIdCard)) {
-                let info = {code:200,errMsg:'身份证号码合法'};
-                try{
-                    if(successCallback){
-                        if(typeof successCallback === "function"){
+        } else if (sIdCard.length == 18) {
+            if (Utils.CheckIdCard.province(sIdCard) && Utils.CheckIdCard.brithday18(sIdCard) && Utils.CheckIdCard.validate(sIdCard)) {
+                let info = { code: 200, errMsg: '身份证号码合法' };
+                try {
+                    if (successCallback) {
+                        if (typeof successCallback === "function") {
                             return successCallback(info);
-                        }else{
+                        } else {
                             return info;
                         }
-                    }else {
+                    } else {
                         return true;
                     }
 
-                }catch (err){
+                } catch (err) {
                     console.log(err);
                 }
-            }else {
-                let info = {code:1001,errMsg:'姓名与身份证号码不匹配'};
-                try{
-                    if(errCallback){
-                        if(typeof errCallback === "function"){
+            } else {
+                let info = { code: 1001, errMsg: '姓名与身份证号码不匹配' };
+                try {
+                    if (errCallback) {
+                        if (typeof errCallback === "function") {
                             return errCallback(info);
-                        }else{
+                        } else {
                             return info;
                         }
-                    }else {
+                    } else {
                         return false;
                     }
 
-                }catch (err){
+                } catch (err) {
                     console.log(err);
                 }
             }
@@ -280,6 +282,14 @@ export default class Utils {
             return false;
         }
         return true
+    }
+
+    /**
+     * 重定向到登陆页面
+     */
+    static redirectLogin() {
+        Storage.remove("localstorage_login")
+        window["webviewHistory"].push('/login')
     }
 
 }
