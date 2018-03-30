@@ -645,6 +645,20 @@ export default class NativeJs {
 		}
 		baseNativeJs('getHomeActivityData')
 	}
+	
+	/**
+	 * 关闭容器
+	 */
+	static controlFinish(){
+		baseNativeJs("controlFinish")
+	}
+
+	/**
+	 * 原生goback,返回上一页，有则返回，没有则关闭容器
+	 */
+	static appBack(){
+		baseNativeJs("appBack")
+	}
 
 }
 
