@@ -177,6 +177,9 @@ export default class Utils {
         }
         return true;
     }
+    /**
+     * 重定向到登陆页面
+     */
     static redirectLogin() {
         Storage.remove("localstorage_login");
         window["webviewHistory"].push('/login');

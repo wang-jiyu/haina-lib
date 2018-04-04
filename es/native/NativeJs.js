@@ -319,7 +319,7 @@ export default class NativeJs {
      */
     static changeBodyFontSize(isshow, callback) {
         window['changeBodyFontSize'] = function (result) {
-            delete window['changeBodyFontSize'];
+            // delete window['changeBodyFontSize']
             try {
                 result = result;
             }
@@ -360,7 +360,15 @@ export default class NativeJs {
                 callback(result);
             }
         };
-        return baseNativeJs("getRequestHead");
+        if (Utils.isApp()) {
+            return baseNativeJs("getRequestHead");
+        }
+        else {
+            //暂时这样处理
+            return callback({
+                headEvents: window['HNtrack'].getHeadEvent
+            });
+        }
     }
     static getPayRequestHead(callback) {
         window['getPayRequestHead'] = function (result) {
@@ -562,6 +570,18 @@ export default class NativeJs {
             }
         };
         baseNativeJs('getHomeActivityData');
+    }
+    /**
+     * 关闭容器
+     */
+    static controlFinish() {
+        baseNativeJs("controlFinish");
+    }
+    /**
+     * 原生goback,返回上一页，有则返回，没有则关闭容器
+     */
+    static appBack() {
+        baseNativeJs("appBack");
     }
 }
 window["NativeJs"] = NativeJs;

@@ -58,5 +58,8 @@ export default class Utils {
     };
     static IDCardVerify(idNo: any, successCallback: any, errCallback: any): any;
     static isChineseName(name: any): boolean;
+    /**
+     * 重定向到登陆页面
+     */
     static redirectLogin(): void;
 }

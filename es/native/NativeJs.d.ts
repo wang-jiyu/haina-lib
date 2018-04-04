@@ -164,7 +164,7 @@ export default class NativeJs {
     /**
      * 获取埋点头
      */
-    static getRequestHead(callback: any): void;
+    static getRequestHead(callback: any): any;
     static getPayRequestHead(callback: any): void;
     /**
      * 拨打电话
@@ -265,4 +265,12 @@ export default class NativeJs {
      */
     static hbLogin(phone: string, code: string, callback: Function): void;
     static getHomeActivityData(callback: Function): void;
+    /**
+     * 关闭容器
+     */
+    static controlFinish(): void;
+    /**
+     * 原生goback,返回上一页，有则返回，没有则关闭容器
+     */
+    static appBack(): void;
 }

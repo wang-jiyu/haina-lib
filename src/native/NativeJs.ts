@@ -379,7 +379,7 @@ export default class NativeJs {
 	 */
 	static changeBodyFontSize(isshow, callback) {
 		window['changeBodyFontSize'] = function (result: any) {
-			delete window['changeBodyFontSize']
+			// delete window['changeBodyFontSize']
 			try {
 				result = result;
 			} catch (e) {
@@ -421,7 +421,15 @@ export default class NativeJs {
 				callback(result);
 			}
 		}
-		return baseNativeJs("getRequestHead")
+		if(Utils.isApp()){
+			return baseNativeJs("getRequestHead")
+
+		}else{
+			//暂时这样处理
+			return callback({
+				headEvents:window['HNtrack'].getHeadEvent
+			})
+		}
 	}
 
 	static getPayRequestHead(callback) {
